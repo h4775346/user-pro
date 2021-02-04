@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {UserComponent} from './components/user/user.component';
-import {LoginComponent} from './components/login/login.component';
-import {SignupComponent} from './components/signup/signup.component';
+import {LoginComponent} from './components/user/login/login.component';
+import {SignupComponent} from './components/user/signup/signup.component';
 import {HomeComponent} from './components/home/home.component';
 import {DashboardComponent} from './components/home/dashboard/dashboard.component';
 import {BillingComponent} from './components/home/billing/billing.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
       {
         path: 'home', component: HomeComponent, children: [
           {path: 'dashboard', component: DashboardComponent},
-          {path: '', component: DashboardComponent},
+          {path: '', redirectTo: '/user/home/dashboard', pathMatch: 'full'},
           {path: 'billing', component: BillingComponent},
           {path: 'data-usage', component: DataUsageComponent},
           {path: 'sessions', component: SessionsComponent},
@@ -26,7 +26,7 @@ const routes: Routes = [
       },
     ]
   },
-  {path: '', redirectTo: '/user/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/user', pathMatch: 'full'},
 ];
 
 @NgModule({

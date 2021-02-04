@@ -1,0 +1,9 @@
+.action-card{
+  cursor: pointer;
+  opacity: 0.9;
+  transition: 0.3s;
+}
+.action-card:hover{
+  border-color: #17a2b8;
+  opacity: 1
+}

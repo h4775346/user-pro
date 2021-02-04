@@ -1,1 +1,160 @@
-<p>dashboard works!</p>
+<div>
+  <div style="padding-top: 23px;">
+    <div class="row" style="padding: 20px;" >
+      <div class="col-md-3" style="margin-top: 15px;">
+
+        <div class="card shadow action-card" style="background: #006b77;" (click)="openChargeCardDialog()">
+          <div class="card-body"><i class="fa fa-credit-card d-flex justify-content-center" style="color: rgb(255,255,255);font-size: 22px;"></i>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Charge Card</h4>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-3" style="margin-top: 15px;">
+        <div class="card shadow action-card" style="background: #006854;">
+          <div class="card-body">
+            <i class="fa fa-flash d-flex justify-content-center" style="color: rgb(255,255,255);font-size: 22px;"></i>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Activate Service</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3" style="margin-top: 15px;">
+        <div class="card shadow action-card" style="background: #004f6d;">
+          <div class="card-body"><i class="fa fa-puzzle-piece d-flex justify-content-center" style="color: rgb(255,255,255);font-size: 22px;"></i>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Extend Service</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3" style="margin-top: 15px;">
+        <div class="card shadow action-card" style="background: #566b21;">
+          <div class="card-body"><i class="fa fa-exchange d-flex justify-content-center" style="color: rgb(255,255,255);font-size: 22px;"></i>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Change Service</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="container-fluid" style="margin-top: 23px;">
+    <mat-spinner *ngIf="!dashboardData"></mat-spinner>
+    <div class="row" style="padding: 20px;background: #ffffff;" *ngIf="dashboardData">
+      <div class="col-md-3" style="margin-top: 15px;">
+        <div class="card shadow" style="background: var(--gray-dark);">
+          <div class="card-body">
+            <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">&nbsp;Days Left</h4>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.remaining_days}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3" style="margin-top: 15px;">
+        <div class="card shadow" style="background: var(--dark);">
+          <div class="card-body">
+            <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Balance</h4>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.balance}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3" style="margin-top: 15px;">
+        <div class="card shadow" style="background: var(--dark);">
+          <div class="card-body">
+            <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Remaining Traffic</h4>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{trafficTransfer.bytesToSize(dashboardData.remaining_traffic)}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3" style="margin-top: 15px;">
+        <div class="card shadow" style="background: var(--dark);">
+          <div class="card-body">
+            <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Invoices</h4>
+            <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.unpaid_invoices}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top: 32px;background: #ffffff;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6" style="margin-top: 20px;padding-bottom: 20px;">
+        <h4 style="background: var(--dark);color: rgb(255,255,255);padding-top: 10px;padding-bottom: 10px;padding-right: 5px;padding-left: 5px;"> <i class="fa fa-puzzle-piece" style="margin-left: 5px;margin-right: 5px;"></i> Service Data </h4>
+        <mat-spinner *ngIf="!serviceData"></mat-spinner>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody *ngIf="serviceData">
+            <tr>
+              <td>Current Service</td>
+              <td>{{serviceData.profile_name}}<i class="fa fa-exchange" style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i></td>
+            </tr>
+            <tr>
+              <td>Service Description<br></td>
+              <td>{{serviceData.description}}<br></td>
+            </tr>
+            <tr>
+              <td>Service Status<br></td>
+              <td >{{serviceData.subscription_status.expiration}}<br></td>
+            </tr>
+            <tr>
+              <td>Expiration Date<br></td>
+              <td>{{serviceData.expiration}}<br></td>
+            </tr>
+            <tr>
+              <td>Connection Status<br></td>
+              <td>{{serviceData.subscription_status.uptime}}<br></td>
+            </tr>
+            <tr>
+              <td>Service Price<br></td>
+              <td>{{serviceData.price}}<br></td>
+            </tr>
+            <tr>
+              <td>Auto Renew<br></td>
+              <td *ngIf="userData">{{userData.auto_renew}}<br></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6" style="margin-top: 20px;padding-bottom: 20px;">
+        <h4 style="background: var(--dark);color: rgb(255,255,255);padding-top: 10px;padding-bottom: 10px;padding-right: 5px;padding-left: 5px;">  <i class="fa fa-user-circle" style="margin-left: 5px;margin-right: 5px;"></i> Personal Data</h4>
+        <mat-spinner *ngIf="!serviceData"></mat-spinner>
+        <div class="table-responsive">
+
+          <table class="table table-striped">
+            <tbody *ngIf="userData">
+            <tr>
+              <td>ID<br></td>
+              <td>{{userData.id}}</td>
+            </tr>
+            <tr>
+              <td>Name<br></td>
+              <td>{{userData.name}}<br></td>
+            </tr>
+            <tr>
+              <td>Username<br></td>
+              <td>{{userData.username}}<br></td>
+            </tr>
+            <tr>
+              <td>Account Balance<br></td>
+              <td>{{userData.balance}}<br></td>
+            </tr>
+            <tr>
+              <td>Email Address<br></td>
+              <td>{{userData.email}}<br></td>
+            </tr>
+            <tr>
+              <td>Phone<br></td>
+              <td>{{userData.phone}}<i class="fa fa-edit" style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i><br></td>
+            </tr>
+            <tr>
+              <td>Address<br></td>
+              <td>{{userData.address}}<i class="fa fa-edit" style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i><br></td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NavService} from '../../../services/nav/nav.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,7 +10,7 @@ export class NavComponent implements OnInit {
 
   sideToggled = false;
 
-  constructor() {
+  constructor(private navService: NavService) {
   }
 
   ngOnInit(): void {
@@ -19,4 +20,7 @@ export class NavComponent implements OnInit {
     this.sideToggled = !this.sideToggled;
   }
 
+  sideToggleForceClose(): void {
+    this.sideToggled = false;
+  }
 }
