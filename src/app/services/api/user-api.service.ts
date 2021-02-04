@@ -9,7 +9,7 @@ import {LocalStorageService} from '../other/local-storage.service';
 })
 export class UserApiService {
 
-  private BaseIp = 'http://192.168.77.77/';
+  private BaseIp = 'https://192.168.77.77/';
   private secret = 'abcdefghijuklmno0123456789012345';
   private BaseUrl = this.BaseIp + 'user/api/index.php/api/';
   private LoginUrl = this.BaseIp + 'user/api/index.php/api/auth/autoLogin';
