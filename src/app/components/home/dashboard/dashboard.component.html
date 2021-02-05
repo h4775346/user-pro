@@ -37,10 +37,12 @@
 </div>
 <div>
   <div class="container-fluid" style="margin-top: 23px;">
-    <mat-spinner *ngIf="!dashboardData"></mat-spinner>
+    <div class="spinner-border" role="status" *ngIf="!dashboardData">
+      <span class="sr-only">Loading...</span>
+    </div>
     <div class="row" style="padding: 20px;background: #ffffff;" *ngIf="dashboardData">
       <div class="col-md-3" style="margin-top: 15px;">
-        <div class="card shadow" style="background: var(--gray-dark);">
+        <div class="card shadow" style="background: darkslategray">
           <div class="card-body">
             <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">&nbsp;Days Left</h4>
             <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.remaining_days}}</h4>
@@ -48,7 +50,7 @@
         </div>
       </div>
       <div class="col-md-3" style="margin-top: 15px;">
-        <div class="card shadow" style="background: var(--dark);">
+        <div class="card shadow" style="background: darkslategray;">
           <div class="card-body">
             <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Balance</h4>
             <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.balance}}</h4>
@@ -56,7 +58,7 @@
         </div>
       </div>
       <div class="col-md-3" style="margin-top: 15px;">
-        <div class="card shadow" style="background: var(--dark);">
+        <div class="card shadow" style="background: darkslategray;">
           <div class="card-body">
             <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Remaining Traffic</h4>
             <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{trafficTransfer.bytesToSize(dashboardData.remaining_traffic)}}</h4>
@@ -64,7 +66,7 @@
         </div>
       </div>
       <div class="col-md-3" style="margin-top: 15px;">
-        <div class="card shadow" style="background: var(--dark);">
+        <div class="card shadow" style="background: darkslategray;">
           <div class="card-body">
             <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">Invoices</h4>
             <h4 class="text-center card-title" style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.unpaid_invoices}}</h4>
@@ -78,8 +80,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-6" style="margin-top: 20px;padding-bottom: 20px;">
-        <h4 style="background: var(--dark);color: rgb(255,255,255);padding-top: 10px;padding-bottom: 10px;padding-right: 5px;padding-left: 5px;"> <i class="fa fa-puzzle-piece" style="margin-left: 5px;margin-right: 5px;"></i> Service Data </h4>
-        <mat-spinner *ngIf="!serviceData"></mat-spinner>
+        <h4 style="background: darkslategray;color: rgb(255,255,255);padding-top: 10px;padding-bottom: 10px;padding-right: 5px;padding-left: 5px;"> <i class="fa fa-puzzle-piece" style="margin-left: 5px;margin-right: 5px;"></i> Service Data </h4>
+
+        <div class="spinner-border" role="status" *ngIf="!serviceData">
+          <span class="sr-only">Loading...</span>
+        </div>
         <div class="table-responsive">
           <table class="table table-striped">
             <tbody *ngIf="serviceData">
@@ -116,8 +121,11 @@
         </div>
       </div>
       <div class="col-md-6" style="margin-top: 20px;padding-bottom: 20px;">
-        <h4 style="background: var(--dark);color: rgb(255,255,255);padding-top: 10px;padding-bottom: 10px;padding-right: 5px;padding-left: 5px;">  <i class="fa fa-user-circle" style="margin-left: 5px;margin-right: 5px;"></i> Personal Data</h4>
-        <mat-spinner *ngIf="!serviceData"></mat-spinner>
+        <h4 style="background: darkslategray;color: rgb(255,255,255);padding-top: 10px;padding-bottom: 10px;padding-right: 5px;padding-left: 5px;">  <i class="fa fa-user-circle" style="margin-left: 5px;margin-right: 5px;"></i> Personal Data</h4>
+
+        <div class="spinner-border" role="status" *ngIf="!serviceData">
+          <span class="sr-only">Loading...</span>
+        </div>
         <div class="table-responsive">
 
           <table class="table table-striped">
