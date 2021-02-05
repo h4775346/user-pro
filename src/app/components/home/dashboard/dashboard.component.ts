@@ -1,16 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UserApiService} from '../../../services/api/user-api.service';
 import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 import {TrafficTransferService} from '../../../services/other/traffic-transfer.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ChargeCardComponent} from '../external/charge-card/charge-card.component';
+import {DashboardWarningService} from '../../../services/other/dashboard-warning.service';
+import {WarningModel} from '../../../Models/warning-model';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
   dashboardData = null;
   userData = null;
@@ -18,11 +20,23 @@ export class DashboardComponent implements OnInit {
 
   constructor(private userApi: UserApiService,
               public trafficTransfer: TrafficTransferService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private warningService: DashboardWarningService) {
 
   }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+    this.getAllData();
+  }
+
+  private getAllData() {
+    this.dashboardData = null;
+    this.userData = null;
+    this.serviceData = null;
     this.getDashboardData();
     this.getServiceData();
     this.getUserData();
@@ -49,9 +63,14 @@ export class DashboardComponent implements OnInit {
 
   openChargeCardDialog() {
     const dialogRef = this.dialog.open(ChargeCardComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(response => {
+      if (response.charge_ok) {
+        this.warningService.createWarning('Card Number ( ' + response.cardNumber + ' ) Charged Successfully!',
+          WarningModel.WARNING_TYPES.success);
+        this.ngOnInit();
+      }
     });
   }
+
 
 }
