@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserApiService} from '../../services/api/user-api.service';
 import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
@@ -9,7 +9,7 @@ import {LocalStorageService} from '../../services/other/local-storage.service';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, AfterViewInit {
   loading = true;
   currentText = 'Loading ...';
 
@@ -20,8 +20,6 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.testAutoLogin();
   }
 
   testAutoLogin() {
@@ -30,6 +28,7 @@ export class UserComponent implements OnInit {
       this.loading = false;
       if (response.status === 200) {
         this.localStorageService.SAVE_JWT_KEY(response.token);
+        console.log(this.localStorageService.GET_JWT_KEY());
         this.router.navigate(['user', 'home']);
       } else {
         this.currentText = response.message.toString();
@@ -39,6 +38,10 @@ export class UserComponent implements OnInit {
       console.log(error);
       this.currentText = error.message;
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.testAutoLogin();
   }
 
 }

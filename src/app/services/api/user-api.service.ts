@@ -14,12 +14,6 @@ export class UserApiService {
   private BaseUrl = this.BaseIp + 'user/api/index.php/api/';
   private LoginUrl = this.BaseIp + 'user/api/index.php/api/auth/autoLogin';
 
-  httpHeader = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + this.getKey()
-    })
-  };
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
   }
@@ -29,19 +23,19 @@ export class UserApiService {
   }
 
   getDashboard() {
-    return this.http.get(this.BaseUrl + 'dashboard', this.httpHeader);
+    return this.http.get(this.BaseUrl + 'dashboard', this.getHttpHeader());
   }
 
   getService() {
-    return this.http.get(this.BaseUrl + 'service', this.httpHeader);
+    return this.http.get(this.BaseUrl + 'service', this.getHttpHeader());
   }
 
   getUserData() {
-    return this.http.get(this.BaseUrl + 'user', this.httpHeader);
+    return this.http.get(this.BaseUrl + 'user', this.getHttpHeader());
   }
 
   chargeCard(data) {
-    return this.http.post(this.BaseUrl + 'redeem', this.encrypt(JSON.stringify(data)), this.httpHeader);
+    return this.http.post(this.BaseUrl + 'redeem', this.encrypt(JSON.stringify(data)), this.getHttpHeader());
   }
 
   encrypt(data) {
@@ -52,4 +46,13 @@ export class UserApiService {
     return this.localStorageService.GET_JWT_KEY();
   }
 
+  getHttpHeader() {
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.getKey()
+      })
+    };
+
+  }
 }
