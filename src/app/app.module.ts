@@ -21,6 +21,8 @@ import {DataUsageComponent} from './components/home/data-usage/data-usage.compon
 import {SessionsComponent} from './components/home/sessions/sessions.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ChargeCardComponent} from './components/home/external/charge-card/charge-card.component';
+import {MatOptionModule} from '@angular/material/core';
+import { DashboardWarningComponent } from './components/home/external/warnings/dashboard-warning/dashboard-warning.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import {ChargeCardComponent} from './components/home/external/charge-card/charge
     BillingComponent,
     DataUsageComponent,
     SessionsComponent,
-    ChargeCardComponent
+    ChargeCardComponent,
+    DashboardWarningComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import {ChargeCardComponent} from './components/home/external/charge-card/charge
     BrowserAnimationsModule,
     FormsModule,
     MatProgressBarModule,
+    MatOptionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

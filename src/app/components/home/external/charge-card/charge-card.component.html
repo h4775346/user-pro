@@ -1,17 +1,34 @@
+<h3>Charge Card</h3>
+<hr>
+
 <div class="newsletter-subscribe">
-  <div class="container">
-    <div class="intro"></div>
+  <div class="container-fluid">
+    <div class="intro" *ngIf="responseMessage">
+      <div class="alert alert-warning" role="alert">
+        <strong>{{responseMessage}}</strong>
+      </div>
+    </div>
     <form class="form-inline" (ngSubmit)="chargeCard()">
       <div class="form-group">
-         <span>
+         <span class="input-span">
     <i class="fa fa-credit-card-alt" aria-hidden="true"></i>
   </span>
-        <input [disabled]="loading" class="form-control" type="text" name="card" placeholder="Card Number" required="" [(ngModel)]="cardModel.card"></div>
+        <input autofocus [disabled]="loading" class="form-control" type="text" name="card" placeholder="Card Number" required=""
+               [(ngModel)]="cardModel.pin"></div>
       <div class="form-group">
-        <button class="btn btn-primary" type="submit" *ngIf="!loading" [disabled]="cardModel.card==''">Charge</button>
+        <button class="btn btn-primary" type="submit" [disabled]="cardModel.pin=='' || loading">
+          <mat-option *ngIf="!loading" style="color: white">Charge</mat-option>
+          <mat-option *ngIf="loading">
+            <span class="spinner-border spinner-border-sm" style="vertical-align: middle" role="status"
+                  aria-hidden="true"></span>
+            Charging...
+          </mat-option>
+        </button>
       </div>
+
+
     </form>
-    <mat-progress-bar class="mt-5" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
   </div>
 
 </div>
+

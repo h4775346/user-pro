@@ -31,14 +31,21 @@ export class UserApiService {
   getDashboard() {
     return this.http.get(this.BaseUrl + 'dashboard', this.httpHeader);
   }
+
   getService() {
     return this.http.get(this.BaseUrl + 'service', this.httpHeader);
   }
+
   getUserData() {
     return this.http.get(this.BaseUrl + 'user', this.httpHeader);
   }
+
+  chargeCard(data) {
+    return this.http.post(this.BaseUrl + 'redeem', this.encrypt(JSON.stringify(data)), this.httpHeader);
+  }
+
   encrypt(data) {
-    return CryptoJS.AES.encrypt(data, this.secret).toString();
+    return {payload: CryptoJS.AES.encrypt(data, this.secret).toString()};
   }
 
   getKey() {
