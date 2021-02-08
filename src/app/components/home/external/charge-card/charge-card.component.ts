@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CardModel} from '../../../../Models/card-model';
 import {UserApiService} from '../../../../services/api/user-api.service';
-import {HttpResponse} from '@angular/common/http';
-import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -24,8 +22,8 @@ export class ChargeCardComponent implements OnInit {
   }
 
   chargeCard() {
-
-    // console.log(this.cardModel);
+    this.loading = true;
+    this.responseMessage = null;
     this.userApi.chargeCard(this.cardModel).subscribe((response: any) => {
         this.loading = false;
         this.response = response;

@@ -1,0 +1,41 @@
+<div class="alert alert-info text-center" role="alert" style="margin: 10px;">
+  <h3 style="font-size: 20px;">Current Service</h3>
+  <hr>
+  <div class="spinner-border" role="status" *ngIf="!serviceData">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <h3 *ngIf="serviceData" style="font-size: 20px;">{{serviceData.profile_name}}</h3>
+</div>
+<div style="text-align: center">
+  <div class="spinner-border" role="status" *ngIf="!availablePackages">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="availablePackages && serviceData" class="row" style="margin-right: 5px;margin-left: 5px;margin-top: 20px;">
+
+  <div class="col-sm-6 col-md-4 my-2" *ngFor="let package of availablePackages">
+    <div class="pricingTable purple">
+
+      <div class="pricingTable-header">
+
+        <h2>{{package.name}}</h2>
+        <hr>
+        <h3>{{package.description}}</h3>
+      </div>
+      <div class="pricing-plans" style="background: rgb(0,139,139);"><span class="price-value">
+        <i class="fa fa-usd"></i><span>{{package.price}}</span></span>
+      </div>
+      <div class="pricingContent">
+        <ul></ul>
+      </div>
+      <div class="pricingTable-sign-up">
+        <a class="btn btn-block" *ngIf="package.id != serviceData.profile_id" (click)="changeService(package)">Select</a>
+        <div class="alert alert-info" role="alert" *ngIf="package.id == serviceData.profile_id">
+          <strong>Current service</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

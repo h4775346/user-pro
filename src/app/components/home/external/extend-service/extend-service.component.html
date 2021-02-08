@@ -1,0 +1,99 @@
+<form method="post" (ngSubmit)="extendService()">
+  <h3>  <i class="fa fa-window-close ml-2 mr-2" style="cursor: pointer" [mat-dialog-close]="true"></i></h3>
+  <h2 class="text-center">Select Extension</h2>
+  <div class="form-group">
+    <select class="custom-select" name="extension"  required="" [(ngModel)]="selectedExtensionId"
+            (change)="getExtensionData()">
+      <option value="-1" class="my-2" disabled selected>Select Extension</option>
+      <option
+        *ngFor="let extension of extensions"
+        value="{{extension.id}}" class="my-2">{{extension.name}}</option>
+    </select>
+  </div>
+<!--  <div class="alert alert-warning" role="alert" *ngIf="responseMessage">-->
+<!--    <strong>{{responseMessage}}</strong>-->
+<!--  </div>-->
+  <div style="text-align: center">
+    <div class="spinner-border" role="status" *ngIf="extensionLoading">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="extensionData && !extensionLoading">
+
+    <h1 style="text-align: center;margin-top: 10px">{{extensionData.name}}</h1>
+    <hr>
+    <div class="col plan price red wow fadeInDown">
+      <ul class="list-group">
+        <li class="list-group-item heading" style="text-align: center;"><span class="price"
+                                                                              style="font-size: 40px;">{{getFloatOf(extensionData.price)}}</span><i
+          class="fa fa-money" style="font-size: 20px;"></i></li>
+        <li *ngIf="extensionData.expiration_amount" class="list-group-item list-group-item-success"
+            style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">expiration_amount</span>
+          <hr>
+          <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
+            style="">{{extensionData.expiration_amount}}</span>
+        </li>
+        <li *ngIf="extensionData.expiration_unit" class="list-group-item list-group-item-success"
+            style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">expiration_unit</span>
+          <hr>
+          <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
+            style="">{{extensionData.expiration_unit}}</span>
+        </li>
+        <li *ngIf="extensionData.traffic_amount" class="list-group-item list-group-item-success"
+            style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span
+          style="">traffic_amount</span>
+          <hr>
+          <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
+            style="">{{trafficTrans.MegaToSize(extensionData.traffic_amount)}}</span>
+        </li>
+        <li *ngIf="extensionData.download_amount" class="list-group-item list-group-item-success"
+            style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">download_amount</span>
+          <hr>
+          <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
+            style="">{{trafficTrans.MegaToSize(extensionData.download_amount)}}</span>
+        </li>
+        <li *ngIf="extensionData.upload_amount" class="list-group-item list-group-item-success"
+            style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span
+          style="">upload_amount</span>
+          <hr>
+          <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
+            style="">{{trafficTrans.MegaToSize(extensionData.upload_amount)}}</span>
+        </li>
+        <li *ngIf="extensionData.uptime_amount" class="list-group-item list-group-item-success"
+            style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span
+          style="">uptime_amount</span>
+          <hr>
+          <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
+            style="">{{extensionData.uptime_amount}}</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div *ngIf="responseMessage">
+    <hr>
+    <div class="alert alert-warning" role="alert" >
+      <strong>{{responseMessage}}</strong>
+    </div>
+  </div>
+
+
+  <hr>
+
+
+  <button [disabled]="loading" class="btn btn-primary" type="button" style=" width: 100%;min-width: 200px;height: 58px;"
+          (click)="extendService()">
+
+    <mat-option *ngIf="!loading" style="color: white;text-align: center;">  <i class="fa fa-bolt"></i> Extend</mat-option>
+    <mat-option *ngIf="loading" style="text-align: center;">
+            <span class="spinner-border spinner-border-sm" style="vertical-align: middle" role="status"
+                  aria-hidden="true"></span>
+      Extending...
+    </mat-option>
+
+  </button>
+
+</form>
+

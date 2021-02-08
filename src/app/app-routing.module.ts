@@ -9,6 +9,7 @@ import {BillingComponent} from './components/home/billing/billing.component';
 import {DataUsageComponent} from './components/home/data-usage/data-usage.component';
 import {SessionsComponent} from './components/home/sessions/sessions.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {ChangeServiceComponent} from './components/home/external/change-service/change-service.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
           {path: 'billing', component: BillingComponent},
           {path: 'data-usage', component: DataUsageComponent},
           {path: 'sessions', component: SessionsComponent},
+          {path: 'change-service', component: ChangeServiceComponent},
         ]
       },
     ]

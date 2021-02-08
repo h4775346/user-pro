@@ -28,7 +28,7 @@ export class UserComponent implements OnInit, AfterViewInit {
       this.loading = false;
       if (response.status === 200) {
         this.localStorageService.SAVE_JWT_KEY(response.token);
-        console.log(this.localStorageService.GET_JWT_KEY());
+        this.localStorageService.SET_AUTO_LOGIN_STATUS();
         this.router.navigate(['user', 'home']);
       } else {
         this.currentText = response.message.toString();
