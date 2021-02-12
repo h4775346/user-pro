@@ -1,6 +1,6 @@
 @font-face {
   font-family: CairoFont;
-  src: url("/assets/fonts/Cairo-Regular.ttf") format("truetype");
+  src: url("assets/fonts/Cairo-Regular.ttf") format("truetype");
 }
 *{
   font-family: CairoFont, serif;

@@ -29,6 +29,10 @@ import { ExtendServiceComponent } from './components/home/external/extend-servic
 import { InputDialogComponent } from './components/home/external/dialogs/input-dialog/input-dialog.component';
 import { ChangeServiceComponent } from './components/home/external/change-service/change-service.component';
 import { MessageDialogComponent } from './components/home/external/dialogs/message-dialog/message-dialog.component';
+import { InvoicesComponent } from './components/home/billing/invoices/invoices.component';
+import { PaymentsComponent } from './components/home/billing/payments/payments.component';
+import { BalanceJournalComponent } from './components/home/billing/balance-journal/balance-journal.component';
+import { SpinnerComponent } from './components/home/external/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,11 @@ import { MessageDialogComponent } from './components/home/external/dialogs/messa
     ExtendServiceComponent,
     InputDialogComponent,
     ChangeServiceComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    InvoicesComponent,
+    PaymentsComponent,
+    BalanceJournalComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

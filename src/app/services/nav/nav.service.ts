@@ -1,15 +1,19 @@
 import {Injectable} from '@angular/core';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
+import {LocalStorageService} from '../other/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavService {
-  constructor(private router: Router) {
+  public static CURRENT_ROUTE = '';
+
+  constructor(private router: Router, private localStorageService: LocalStorageService) {
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      console.log(event.urlAfterRedirects);
+      NavService.CURRENT_ROUTE = event.urlAfterRedirects;
+      console.log(NavService.CURRENT_ROUTE);
     });
 
   }

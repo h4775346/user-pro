@@ -14,6 +14,22 @@ export class LocalStorageService {
   constructor(private router: Router) {
   }
 
+  public static REMOVE_KEY() {
+    localStorage.removeItem('jwt');
+    console.log('keeeeeeey');
+  }
+  public static setLastRoute(route) {
+    localStorage.setItem('last_route', route);
+  }
+
+  public static getLastRoute(): string {
+    const lastRoute = localStorage.getItem('last_route');
+    if (lastRoute != null) {
+      return lastRoute;
+    }
+    return '/user/home';
+  }
+
   SAVE_JWT_KEY(jwt) {
     localStorage.setItem('jwt', jwt);
   }
@@ -24,6 +40,10 @@ export class LocalStorageService {
       return null;
     }
     return localStorage.getItem('jwt');
+  }
+
+  JWT_EXISTED() {
+    return localStorage.getItem('jwt') != null;
   }
 
   SAVE_USER_DATA(userId: any, user: string, pass: any) {
@@ -104,4 +124,7 @@ export class LocalStorageService {
     this.UPDATE_USER_DATA(id, newData);
     this.SAVE_MAIN_USER(newData);
   }
+
+
+
 }

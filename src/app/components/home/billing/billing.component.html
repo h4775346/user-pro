@@ -1,1 +1,33 @@
-<p>billing works!</p>
+<div class="card mt-5">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="#invoices" style="font-size: 20px;" id="invoices-tab" data-toggle="tab"
+           role="tab"
+           aria-controls="home" aria-selected="true">Invoices<br></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#payments" style="font-size: 20px;" id="payments-tab" data-toggle="tab" role="tab"
+           aria-controls="profile" aria-selected="false">Payments<br></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#balance_journal" style="font-size: 20px;" id="balance_journal-tab" data-toggle="tab"
+           role="tab" aria-controls="contact" aria-selected="false">Balance Journal<br></a>
+      </li>
+    </ul>
+  </div>
+  <div class="tab-content" id="myTabContent">
+
+    <div class="tab-pane fade show active" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
+      <app-invoices></app-invoices>
+    </div>
+
+    <div class="tab-pane fade" id="payments" role="tabpanel" aria-labelledby="payments-tab">
+      <app-payments></app-payments>
+    </div>
+
+    <div class="tab-pane fade" id="balance_journal" role="tabpanel" aria-labelledby="balance_journal-tab">
+      <app-balance-journal></app-balance-journal>
+    </div>
+  </div>
+</div>

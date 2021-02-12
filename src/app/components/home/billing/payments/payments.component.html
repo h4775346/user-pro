@@ -1,0 +1,64 @@
+<div class="card-body">
+  <h1 class="card-title alert alert-secondary">Payments</h1>
+
+  <app-spinner *ngIf="!responseData"></app-spinner>
+  <div class="table-responsive" *ngIf="responseData">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Receipt No</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Description</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let payment of paymentData">
+        <td>{{payment.receipt_number}}</td>
+        <td>{{payment.created_at}}</td>
+        <td>{{payment.type}}</td>
+        <td>{{payment.amount}}</td>
+        <td>{{payment.description}}</td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row mt-5" *ngIf="responseData">
+    <div class="col-md-6 d-flex justify-content-start">
+      <nav>
+        <ul class="pagination">
+          <li class="page-item" [class.cursor-pointer]="pageModel.count != 10" [class.disabled]="pageModel.count == 10"><a class="page-link" (click)="getPayments(1,10)" >10</a></li>
+          <li class="page-item" [class.cursor-pointer]="pageModel.count != 50" [class.disabled]="pageModel.count == 50"><a class="page-link"  (click)="getPayments(1,50)">50</a></li>
+          <li class="page-item" [class.cursor-pointer]="pageModel.count != 100" [class.disabled]="pageModel.count == 100"><a class="page-link"  (click)="getPayments(1,100)">100</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-md-6 d-flex justify-content-end">
+      <nav>
+        <ul class="pagination">
+
+          <li class="page-item" style="cursor: pointer" *ngIf="responseData.prev_page_url"
+              [class.pointer-event]="responseData.prev_page_url"><a class="page-link" aria-label="Previous"
+                                                                    (click)="getPayments(currentPage-1)"><span
+            aria-hidden="true">«</span></a></li>
+
+          <li class="page-item" style="cursor: pointer" *ngFor="let page of allPages"
+              [class.active]="page == currentPage"><a class="page-link" (click)="getPayments(page)">{{page}}</a></li>
+
+          <li class="page-item" style="cursor: pointer" *ngIf="responseData.next_page_url">
+            <a class="page-link" aria-label="Next"
+               (click)="getPayments(currentPage+1)"><span
+              aria-hidden="true">»</span></a></li>
+
+
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+
+
+</div>
