@@ -24,6 +24,7 @@ export class HttpErrorHandlerService {
       console.error('An error occurred:', error.error.message);
     } else {
       switch (error.status) {
+        case 0:
         case 401:
           console.log('Key Removed');
           LocalStorageService.REMOVE_KEY();
@@ -34,6 +35,8 @@ export class HttpErrorHandlerService {
           break;
         default:
           console.log(error);
+          console.log('Error Status ' + error.status);
+          console.log('Error Message ' + error.message);
       }
     }
     // Return an observable with a user-facing error message.

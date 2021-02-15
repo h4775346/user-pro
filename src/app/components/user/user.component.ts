@@ -15,7 +15,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   currentText = 'Loading ...';
   loading = true;
 
-  redirectToPage = 'user/home';
+  redirectToPage = '/user/home';
 
   constructor(private router: Router,
               private userApi: UserApiService,
@@ -27,7 +27,6 @@ export class UserComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     if (!this.localStorageService.JWT_EXISTED()) {
       this.testAutoLogin();
-      console.log('autooooooooo');
     } else {
       this.loading = false;
       this.router.navigateByUrl(this.redirectToPage);
@@ -47,9 +46,7 @@ export class UserComponent implements OnInit, AfterViewInit {
         this.currentText = response.message.toString();
       }
     }, (error) => {
-      this.loading = false;
-      console.log(error);
-      this.currentText = error.message;
+      this.router.navigate(['user', 'login']);
     });
   }
 

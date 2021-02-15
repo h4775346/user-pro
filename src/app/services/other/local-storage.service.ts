@@ -18,13 +18,14 @@ export class LocalStorageService {
     localStorage.removeItem('jwt');
     console.log('keeeeeeey');
   }
+
   public static setLastRoute(route) {
     localStorage.setItem('last_route', route);
   }
 
   public static getLastRoute(): string {
     const lastRoute = localStorage.getItem('last_route');
-    if (lastRoute != null) {
+    if (lastRoute != null && lastRoute !== '/user') {
       return lastRoute;
     }
     return '/user/home';
@@ -124,7 +125,6 @@ export class LocalStorageService {
     this.UPDATE_USER_DATA(id, newData);
     this.SAVE_MAIN_USER(newData);
   }
-
 
 
 }
