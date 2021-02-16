@@ -1,36 +1,73 @@
+<div class="mt-5">
 
-<div style="height: 230px;">
-<!--  <canvas-->
-<!--    data-bs-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;January&quot;,&quot;March&quot;,&quot;April&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Download&quot;,&quot;backgroundColor&quot;:&quot;#4e73df&quot;,&quot;borderColor&quot;:&quot;#4e73df&quot;,&quot;data&quot;:[&quot;4500&quot;,&quot;5300&quot;,&quot;6250&quot;],&quot;fill&quot;:true},{&quot;label&quot;:&quot;Upload&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;4500&quot;,&quot;5000&quot;,&quot;10000&quot;],&quot;backgroundColor&quot;:&quot;rgb(81,45,68)&quot;},{&quot;label&quot;:&quot;Real Traffic&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;6000&quot;,&quot;8000&quot;,&quot;15000&quot;],&quot;backgroundColor&quot;:&quot;#0f2b5b&quot;},{&quot;label&quot;:&quot;Total Traffic&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;8500&quot;,&quot;20000&quot;,&quot;22000&quot;],&quot;backgroundColor&quot;:&quot;#212529&quot;,&quot;borderColor&quot;:&quot;rgba(0,0,0,0.1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:true,&quot;position&quot;:&quot;top&quot;,&quot;reverse&quot;:false},&quot;title&quot;:{&quot;display&quot;:true,&quot;position&quot;:&quot;top&quot;,&quot;text&quot;:&quot;Traffic Monitor&quot;,&quot;fontSize&quot;:&quot;22&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;drawBorder&quot;:true,&quot;drawTicks&quot;:true,&quot;drawOnChartArea&quot;:true},&quot;ticks&quot;:{&quot;beginAtZero&quot;:false}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;drawBorder&quot;:true,&quot;drawTicks&quot;:true,&quot;drawOnChartArea&quot;:true},&quot;ticks&quot;:{&quot;beginAtZero&quot;:false}}]}}}"></canvas>-->
-</div>
+  <form (ngSubmit)="getData()" class="pt-4 pb-2 pl-2 pr-2"
+        style="background: white; margin-top: 10px; margin-bottom: 15px; text-align: center">
+    <label for="month_year_selector" class="mx-1">
+      <select style="font-size: large" class="custom-select" name="data_type_show" id="month_year_selector"
+              [(ngModel)]="trafficModel.report_type">
+        <option value="daily" selected>Daily</option>
+        <option value="monthly">Monthly</option>
+      </select>
+    </label>
+    <label for="month_picker" *ngIf="trafficModel.report_type == 'daily'">
+      <input #month style="font-size: large" class="py-1 mx-1" (change)="trafficModel.setMonthData(month);" type="month"
+             id="month_picker" value="{{getCurrentMonth()}}" name="month_picker"/>
+    </label>
+    <label for="year_picker" *ngIf="trafficModel.report_type == 'monthly'">
+      <input style="font-size: large" class="py-1 mx-1 px-3" [(ngModel)]="trafficModel.year" type="number" min="2015"
+             max="2099" value="{{getFullYear()}}" step="1" id="year_picker" name="year_picker"/>
+    </label>
+
+    <button class="btn btn-primary mx-1" style="width: 100%" type="submit" id="btn_submit_month">Get Data</button>
+
+  </form>
 
 
-<div class="table-responsive">
-  <table class="table table-striped table-hover table-sm">
-    <thead>
-    <tr>
-      <th>Day/Month</th>
-      <th>Download</th>
-      <th>Upload</th>
-      <th>Total Traffic</th>
-      <th>Real Traffic</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>2021-2-1<br></td>
-      <td>1.59 GB<br></td>
-      <td>67.91 MB<br></td>
-      <td>1.66 GB<br></td>
-      <td>1.66 GB<br></td>
-    </tr>
-    <tr>
-      <td>2021-2-2<br></td>
-      <td>1.27 GB<br></td>
-      <td>69.96 MB<br></td>
-      <td>1.34 GB<br></td>
-      <td>1.34 GB<br></td>
-    </tr>
-    </tbody>
-  </table>
+  <app-spinner *ngIf="!trafficResponse"></app-spinner>
+
+  <div *ngIf="trafficResponse">
+
+
+    <div style="display: block; background: white; padding: 10px">
+      <canvas mdbChart
+              [chartType]="chartService.chartType"
+              [datasets]="chartService.chartDatasets"
+              [labels]="chartService.currentUsageLabels"
+              [colors]="chartService.chartColors"
+              [options]="chartService.chartOptions"
+              [legend]="true"
+              (chartHover)="chartService.chartHovered($event)"
+              (chartClick)="chartService.chartClicked($event)">
+      </canvas>
+    </div>
+
+    <div class="table-responsive mt-3 pb-2 px-2 mb-5" style="background: white">
+      <table class="table table-striped table-hover table-sm">
+        <thead>
+        <tr>
+          <th>Day/Month</th>
+          <th>Download</th>
+          <th>Upload</th>
+          <th>Total Traffic</th>
+          <th>Real Traffic</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of trafficData.tx;let i = index" >
+            <td *ngIf="trafficModel.report_type == 'daily'">{{getCurrentMonth() + '-' + (i+1)}}</td>
+            <td *ngIf="trafficModel.report_type == 'monthly'">{{getFullYear() + '-' + (i+1)}}</td>
+            <td>{{trafficConverter.bytesToSize(trafficData.rx[i])}}</td>
+            <td>{{trafficConverter.bytesToSize(data)}}</td>
+            <td>{{trafficConverter.bytesToSize(trafficData.total[i])}}</td>
+            <td>{{trafficConverter.bytesToSize(trafficData.total_real[i])}}</td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+
 </div>

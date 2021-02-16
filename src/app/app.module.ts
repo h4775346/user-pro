@@ -22,17 +22,19 @@ import {SessionsComponent} from './components/home/sessions/sessions.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ChargeCardComponent} from './components/home/external/charge-card/charge-card.component';
 import {MatOptionModule} from '@angular/material/core';
-import { DashboardWarningComponent } from './components/home/external/warnings/dashboard-warning/dashboard-warning.component';
-import { ActivateServiceComponent } from './components/home/external/activate-service/activate-service.component';
-import { ConfirmDialogComponent } from './components/home/external/dialogs/confirm-dialog/confirm-dialog.component';
-import { ExtendServiceComponent } from './components/home/external/extend-service/extend-service.component';
-import { InputDialogComponent } from './components/home/external/dialogs/input-dialog/input-dialog.component';
-import { ChangeServiceComponent } from './components/home/external/change-service/change-service.component';
-import { MessageDialogComponent } from './components/home/external/dialogs/message-dialog/message-dialog.component';
-import { InvoicesComponent } from './components/home/billing/invoices/invoices.component';
-import { PaymentsComponent } from './components/home/billing/payments/payments.component';
-import { BalanceJournalComponent } from './components/home/billing/balance-journal/balance-journal.component';
-import { SpinnerComponent } from './components/home/external/spinner/spinner.component';
+import {DashboardWarningComponent} from './components/home/external/warnings/dashboard-warning/dashboard-warning.component';
+import {ActivateServiceComponent} from './components/home/external/activate-service/activate-service.component';
+import {ConfirmDialogComponent} from './components/home/external/dialogs/confirm-dialog/confirm-dialog.component';
+import {ExtendServiceComponent} from './components/home/external/extend-service/extend-service.component';
+import {InputDialogComponent} from './components/home/external/dialogs/input-dialog/input-dialog.component';
+import {ChangeServiceComponent} from './components/home/external/change-service/change-service.component';
+import {MessageDialogComponent} from './components/home/external/dialogs/message-dialog/message-dialog.component';
+import {InvoicesComponent} from './components/home/billing/invoices/invoices.component';
+import {PaymentsComponent} from './components/home/billing/payments/payments.component';
+import {BalanceJournalComponent} from './components/home/billing/balance-journal/balance-journal.component';
+import {SpinnerComponent} from './components/home/external/spinner/spinner.component';
+import {MDBBootstrapModule, InputsModule} from 'angular-bootstrap-md';
+import {SelectModule} from 'ng-uikit-pro-standard';
 
 
 @NgModule({
@@ -70,9 +72,17 @@ import { SpinnerComponent } from './components/home/external/spinner/spinner.com
     FormsModule,
     MatProgressBarModule,
     MatOptionModule,
+    MDBBootstrapModule.forRoot(),
+    InputsModule,
+    SelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 }
+
+//              "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+// //              "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
+// //              "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+// //              "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",

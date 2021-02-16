@@ -26,9 +26,11 @@ const routes: Routes = [
           {path: 'change-service', component: ChangeServiceComponent},
         ]
       },
-    ]
+    ],
   },
   {path: '', redirectTo: '/user', pathMatch: 'full'},
+  {path: 'user', redirectTo: '/user', pathMatch: 'full'},
+
 ];
 
 @NgModule({

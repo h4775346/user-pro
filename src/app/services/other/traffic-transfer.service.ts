@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {toNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_version';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,16 @@ export class TrafficTransferService {
       return `${bytes} ${this.sizes[i]})`;
     }
     return `${(bytes / (1024 ** i)).toFixed(1)} ${this.sizes[i]}`;
+  }
+
+  bytesToMBArray(array: Array<any>) {
+    const myArr = array.slice();
+    for (let i = 0; i < myArr.length; i++) {
+      if (myArr[i] !== 0) {
+        myArr[i] = (myArr[i] / 1048576).toFixed(0);
+      }
+    }
+    return myArr;
   }
 
 

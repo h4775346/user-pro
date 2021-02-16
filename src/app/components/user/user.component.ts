@@ -20,6 +20,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private userApi: UserApiService,
               private localStorageService: LocalStorageService,
+              private navService: NavService
   ) {
     this.redirectToPage = this.getLastRedirectPage();
   }
@@ -29,7 +30,9 @@ export class UserComponent implements OnInit, AfterViewInit {
       this.testAutoLogin();
     } else {
       this.loading = false;
-      this.router.navigateByUrl(this.redirectToPage);
+      if (NavService.CURRENT_ROUTE === '/user') {
+        this.router.navigateByUrl(this.redirectToPage);
+      }
     }
 
   }

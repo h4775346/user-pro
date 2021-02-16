@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {catchError} from 'rxjs/operators';
 import {HttpErrorHandlerService} from './http-error-handler.service';
 import {PageModel} from '../../Models/page-model';
+import {TrafficModel} from '../../Models/traffic-model';
 
 
 @Injectable({
@@ -99,12 +100,20 @@ export class UserApiService {
     );
   }
 
+  getTraffic(data: TrafficModel) {
+    return this.http.post(this.BaseUrl + 'traffic', this.encrypt(JSON.stringify(data)), this.getHttpHeader()).pipe(
+      catchError(this.httpError.handleError)
+    );
+  }
+
   getJournals(data: PageModel) {
     return this.http.post(this.BaseUrl + 'index/journal', this.encrypt(JSON.stringify(data)), this.getHttpHeader()).pipe(
       catchError(this.httpError.handleError)
     );
   }
+
   encrypt(data) {
+    console.log(JSON.parse(data));
     return {payload: CryptoJS.AES.encrypt(data, this.secret).toString()};
   }
 
@@ -121,6 +130,7 @@ export class UserApiService {
     };
 
   }
+
 
 
 }
