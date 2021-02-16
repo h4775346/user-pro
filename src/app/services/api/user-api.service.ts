@@ -7,6 +7,7 @@ import {catchError} from 'rxjs/operators';
 import {HttpErrorHandlerService} from './http-error-handler.service';
 import {PageModel} from '../../Models/page-model';
 import {TrafficModel} from '../../Models/traffic-model';
+import {DashboardWarningService} from '../other/dashboard-warning.service';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class UserApiService {
 
 
   constructor(private http: HttpClient, private localStorageService: LocalStorageService, private router: Router,
-              private httpError: HttpErrorHandlerService) {
+              private httpError: HttpErrorHandlerService, private warning: DashboardWarningService) {
   }
 
   autologin() {
@@ -112,8 +113,16 @@ export class UserApiService {
     );
   }
 
+  getSessions(data: PageModel) {
+    data.sortBy = 'radacctid';
+    return this.http.post(this.BaseUrl + 'index/session', this.encrypt(JSON.stringify(data)), this.getHttpHeader()).pipe(
+      catchError(this.httpError.handleError)
+    );
+  }
+
   encrypt(data) {
     console.log(JSON.parse(data));
+
     return {payload: CryptoJS.AES.encrypt(data, this.secret).toString()};
   }
 
@@ -130,7 +139,6 @@ export class UserApiService {
     };
 
   }
-
 
 
 }

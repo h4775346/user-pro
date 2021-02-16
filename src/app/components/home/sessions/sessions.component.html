@@ -1,1 +1,72 @@
-<p>sessions works!</p>
+<div class="card-body mt-5" style="background: white">
+  <h1 class="card-title alert alert-secondary">Sessions</h1>
+
+  <app-spinner *ngIf="!responseData"></app-spinner>
+  <div class="table-responsive" *ngIf="responseData">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Started On</th>
+        <th>Ended On</th>
+        <th>IP</th>
+        <th>Download</th>
+        <th>Upload</th>
+        <th>total</th>
+        <th>MAC</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let session of sessionsData">
+
+        <td>{{session.acctstarttime}}</td>
+        <td>{{session.acctstoptime}}</td>
+        <td>{{session.framedipaddress}}</td>
+        <td>{{trafficConverter.bytesToSize(session.acctoutputoctets)}}</td>
+        <td>{{trafficConverter.bytesToSize(session.acctinputoctets)}}</td>
+        <td>{{trafficConverter.bytesToSize((session.acctinputoctets + session.acctoutputoctets))}}</td>
+        <td>{{session.callingstationid}}</td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row mt-5" *ngIf="responseData">
+    <div class="col-md-6 d-flex justify-content-start">
+      <nav>
+        <ul class="pagination">
+          <li class="page-item" [class.cursor-pointer]="pageModel.count != 10" [class.disabled]="pageModel.count == 10">
+            <a class="page-link" (click)="getSessions(1,10)">10</a></li>
+          <li class="page-item" [class.cursor-pointer]="pageModel.count != 50" [class.disabled]="pageModel.count == 50">
+            <a class="page-link" (click)="getSessions(1,50)">50</a></li>
+          <li class="page-item" [class.cursor-pointer]="pageModel.count != 100"
+              [class.disabled]="pageModel.count == 100"><a class="page-link" (click)="getSessions(1,100)">100</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-md-6 d-flex justify-content-end">
+      <nav>
+        <ul class="pagination">
+
+          <li class="page-item" style="cursor: pointer" *ngIf="currentPage!=1"
+              [class.pointer-event]="responseData.prev_page_url"><a class="page-link" aria-label="Previous"
+                                                                    (click)="getSessions(currentPage-1)"><span
+            aria-hidden="true">«</span></a></li>
+
+          <li class="page-item" style="cursor: pointer" *ngFor="let page of allPages"
+              [class.active]="page == currentPage"><a class="page-link" (click)="getSessions(page)">{{page}}</a></li>
+
+          <li class="page-item" style="cursor: pointer" *ngIf="currentPage<allPages.length">
+            <a class="page-link" aria-label="Next"
+               (click)="getSessions(currentPage+1)"><span
+              aria-hidden="true">»</span></a></li>
+
+
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+
+
+</div>

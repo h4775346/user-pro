@@ -5,7 +5,7 @@
     <label for="month_year_selector" class="mx-1">
       <select style="font-size: large" class="custom-select" name="data_type_show" id="month_year_selector"
               [(ngModel)]="trafficModel.report_type">
-        <option value="daily" selected>Daily</option>
+        <option value="daily">Daily</option>
         <option value="monthly">Monthly</option>
       </select>
     </label>
@@ -54,7 +54,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let data of trafficData.tx;let i = index" >
-            <td *ngIf="trafficModel.report_type == 'daily'">{{getCurrentMonth() + '-' + (i+1)}}</td>
+            <td *ngIf="trafficModel.report_type == 'daily'">{{getDate(i+1)}}</td>
             <td *ngIf="trafficModel.report_type == 'monthly'">{{getFullYear() + '-' + (i+1)}}</td>
             <td>{{trafficConverter.bytesToSize(trafficData.rx[i])}}</td>
             <td>{{trafficConverter.bytesToSize(data)}}</td>

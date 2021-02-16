@@ -17,7 +17,8 @@ export class ChartService {
   monthlyUsageLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
     'September', 'Oct', 'Nov', 'Dec'];
 
-  dailyUsageLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  dailyUsageLabels: Array<any> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
 
   currentUsageLabels = this.monthlyUsageLabels;
 
@@ -76,8 +77,10 @@ export class ChartService {
   }
 
   setDays(month, year) {
-    this.dailyUsageLabels = [...Array(this.daysInMonth(month, year) + 1).keys()];
-    this.dailyUsageLabels.shift();
+    // this.dailyUsageLabels = [];
+    // for (let i = 1; i <= this.daysInMonth(month, year); i++) {
+    //   this.dailyUsageLabels.push(i);
+    // }
     this.currentUsageLabels = this.dailyUsageLabels;
   }
 

@@ -16,11 +16,6 @@ export class DataUsageComponent implements OnInit, AfterViewInit {
   trafficResponse;
   trafficData: any;
 
-  uploadArray;
-  downloadArray;
-  totalArray;
-  realArray;
-
   constructor(public chartService: ChartService, private userApi: UserApiService, public trafficConverter: TrafficTransferService) {
   }
 
@@ -39,9 +34,20 @@ export class DataUsageComponent implements OnInit, AfterViewInit {
 
   getCurrentMonth() {
     const today = new Date();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const mm = today.getMonth() + 1;
     const yyyy = today.getFullYear();
-    return yyyy + '-' + mm;
+    let mm2: string;
+    if (mm < 10) {
+      mm2 = '0' + mm;
+    }
+    return (yyyy + '-' + mm2);
+  }
+
+  getDate(day) {
+    const today = new Date();
+    const mm = (today.getMonth() + 1);
+    const yyyy = today.getFullYear();
+    return yyyy + '-' + mm + '-' + day;
   }
 
   getData() {
@@ -49,7 +55,6 @@ export class DataUsageComponent implements OnInit, AfterViewInit {
     this.userApi.getTraffic(this.trafficModel).subscribe((response: any) => {
       this.trafficResponse = response;
       this.trafficData = response.data;
-      this.createTrafficArr();
       this.chartService.setData(
         response.data.rx,
         response.data.tx,
@@ -61,10 +66,4 @@ export class DataUsageComponent implements OnInit, AfterViewInit {
 
   }
 
-  createTrafficArr() {
-    this.uploadArray = this.trafficData.tx;
-    this.downloadArray = this.trafficData.rx;
-    this.totalArray = this.trafficData.total;
-    this.realArray = this.trafficData.total_real;
-  }
 }
