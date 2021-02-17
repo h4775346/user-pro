@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {CardModel} from '../../../../Models/card-model';
 import {UserApiService} from '../../../../services/api/user-api.service';
 import {MatDialogRef} from '@angular/material/dialog';
+import {WarningModel} from '../../../../Models/warning-model';
+import {DashboardWarningService} from '../../../../services/other/dashboard-warning.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-charge-card',
@@ -10,7 +13,8 @@ import {MatDialogRef} from '@angular/material/dialog';
 })
 export class ChargeCardComponent implements OnInit {
 
-  constructor(private userApi: UserApiService, public dialogRef: MatDialogRef<ChargeCardComponent>) {
+  constructor(private userApi: UserApiService, private warningService: DashboardWarningService,
+              private router: Router) {
   }
 
   loading = false;
@@ -47,7 +51,9 @@ export class ChargeCardComponent implements OnInit {
         this.responseMessage = 'Used Card';
         break;
       case 200:
-        this.dialogRef.close({charge_ok: true, cardNumber: this.cardModel.pin});
+        this.warningService.createWarning('Card Number ( ' + this.cardModel.pin + ' ) Charged Successfully!',
+          WarningModel.WARNING_TYPES.success);
+        this.router.navigate(['user', 'home', 'dashboard']);
         break;
       case -4:
         this.responseMessage = 'Suspended Card';

@@ -70,6 +70,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   saveLoginData() {
     if (this.localStorageService.USER_AUTO_LOGIN()) {
       this.localStorageService.SAVE_USER_DATA(this.userData.id, this.userData.username, true);
+    } else {
+      const user = this.localStorageService.GET_LOGIN_DATA();
+      if (user === false) {
+        return;
+      }
+      console.log(user);
+      this.localStorageService.SAVE_USER_DATA(this.userData.id, user.username, user.password);
+      this.localStorageService.SAVE_CURRENT_USER_PASSWORD(user.password);
     }
   }
 

@@ -3,13 +3,17 @@ import {Router} from '@angular/router';
 import {newArray} from '@angular/compiler/src/util';
 import {UserDataModel} from '../../Models/user-data-model';
 import {toNumbers} from '@angular/compiler-cli/src/diagnostics/typescript_version';
+import {UserApiService} from '../api/user-api.service';
+import {UserLoginModel} from '../../Models/user-login-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
+  public static CODE_DATA;
 
   arrUserData: UserDataModel[] = [];
+
 
   constructor(private router: Router) {
   }
@@ -25,10 +29,28 @@ export class LocalStorageService {
 
   public static getLastRoute(): string {
     const lastRoute = localStorage.getItem('last_route');
-    if (lastRoute != null && lastRoute !== '/user') {
+    if (lastRoute != null && lastRoute !== '/user' && lastRoute !== '') {
       return lastRoute;
     }
     return '/user/home';
+  }
+
+  public static SET_AUTO_LOGIN_STATUS(autologin = true) {
+    localStorage.setItem('auto_login', autologin.toString());
+  }
+
+  SAVE_CODE_DATA(codeData) {
+    LocalStorageService.CODE_DATA = codeData;
+    this.SET_CODE(codeData.code);
+    localStorage.setItem('code_data', JSON.stringify(LocalStorageService.CODE_DATA));
+  }
+
+  GET_CODE_DATA() {
+    const codeData = localStorage.getItem('code_data');
+    if (codeData != null) {
+      return JSON.parse(codeData);
+    }
+    return false;
   }
 
   SAVE_JWT_KEY(jwt) {
@@ -55,7 +77,7 @@ export class LocalStorageService {
       this.arrUserData.push(data);
       this.SAVE_MAIN_USER(data);
     } else {
-      this.SAVE_MAIN_USER(this.GET_USER_DATA(userId));
+      this.SAVE_MAIN_USER(data);
     }
     localStorage.setItem('users_data', JSON.stringify(this.arrUserData));
   }
@@ -112,7 +134,8 @@ export class LocalStorageService {
   }
 
   GET_MAIN_USER() {
-    const currentUser: UserDataModel = JSON.parse(localStorage.getItem('main_user'));
+    const mainUser = localStorage.getItem('main_user');
+    const currentUser: UserDataModel = JSON.parse(mainUser);
     return currentUser;
   }
 
@@ -126,5 +149,42 @@ export class LocalStorageService {
     this.SAVE_MAIN_USER(newData);
   }
 
+  SET_CODE(code) {
+    localStorage.setItem('code', code);
+  }
 
+  GET_CODE() {
+    const code = localStorage.getItem('code');
+    if (code == null) {
+      return false;
+    }
+    return code;
+  }
+
+  SAVE_LOGIN_DATA(userLoginModel: UserLoginModel) {
+    localStorage.setItem('username', userLoginModel.username);
+    localStorage.setItem('password', userLoginModel.password);
+  }
+
+  GET_LOGIN_DATA() {
+    const user = localStorage.getItem('username');
+    const pass = localStorage.getItem('password');
+    if (user == null || pass == null) {
+      return false;
+    }
+    return {username: user, password: pass};
+  }
+
+  SET_LOGOUT_STATUS(status) {
+    localStorage.setItem('logout', status);
+  }
+
+  IS_LOGGED_OUT() {
+    const logoutStatus = localStorage.getItem('logout');
+    if (logoutStatus == null || logoutStatus === 'false' ) {
+      return false;
+    }
+    return logoutStatus;
+
+  }
 }

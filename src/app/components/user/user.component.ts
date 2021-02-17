@@ -4,6 +4,9 @@ import {UserApiService} from '../../services/api/user-api.service';
 import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 import {LocalStorageService} from '../../services/other/local-storage.service';
 import {NavService} from '../../services/nav/nav.service';
+import {CodeApiService} from '../../services/api/code-api.service';
+import {CheckCodeService} from '../../services/other/check-code.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-user',
@@ -20,21 +23,27 @@ export class UserComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private userApi: UserApiService,
               private localStorageService: LocalStorageService,
-              private navService: NavService
+              private checkCodeService: CheckCodeService
   ) {
     this.redirectToPage = this.getLastRedirectPage();
   }
 
   ngOnInit(): void {
+    if (this.localStorageService.IS_LOGGED_OUT()) {
+      this.loading = true;
+      this.redirectToPage = '/user/login';
+      this.router.navigateByUrl(this.redirectToPage);
+      return;
+    }
     if (!this.localStorageService.JWT_EXISTED()) {
       this.testAutoLogin();
     } else {
       this.loading = false;
-      if (NavService.CURRENT_ROUTE === '/user') {
+      if (NavService.CURRENT_ROUTE === '/user' || NavService.CURRENT_ROUTE === '') {
         this.router.navigateByUrl(this.redirectToPage);
       }
+      this.checkCodeService.startCheckingNow();
     }
-
   }
 
   testAutoLogin() {
@@ -43,12 +52,15 @@ export class UserComponent implements OnInit, AfterViewInit {
       this.loading = false;
       if (response.status === 200) {
         this.localStorageService.SAVE_JWT_KEY(response.token);
-        this.localStorageService.SET_AUTO_LOGIN_STATUS();
+        this.localStorageService.SET_AUTO_LOGIN_STATUS(true);
         this.router.navigateByUrl(this.redirectToPage);
+        this.checkCodeService.startCheckingNow();
       } else {
         this.currentText = response.message.toString();
       }
-    }, (error) => {
+    }, (error: HttpErrorResponse) => {
+      this.loading = false;
+      LocalStorageService.SET_AUTO_LOGIN_STATUS(false);
       this.router.navigate(['user', 'login']);
     });
   }
@@ -61,4 +73,6 @@ export class UserComponent implements OnInit, AfterViewInit {
     console.log('you will navigate to ' + LocalStorageService.getLastRoute());
     return LocalStorageService.getLastRoute();
   }
+
+
 }

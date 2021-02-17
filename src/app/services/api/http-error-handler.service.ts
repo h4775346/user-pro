@@ -25,6 +25,13 @@ export class HttpErrorHandlerService {
     } else {
       switch (error.status) {
         case 0:
+          LocalStorageService.SET_AUTO_LOGIN_STATUS(false);
+          // LocalStorageService.REMOVE_KEY();
+          LocalStorageService.setLastRoute(NavService.CURRENT_ROUTE);
+          HttpErrorHandlerService.router.navigate(['user']).then(() => {
+            window.location.reload();
+          });
+          break;
         case 401:
           console.log('Key Removed');
           LocalStorageService.REMOVE_KEY();

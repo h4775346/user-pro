@@ -10,6 +10,9 @@ import {DataUsageComponent} from './components/home/data-usage/data-usage.compon
 import {SessionsComponent} from './components/home/sessions/sessions.component';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {ChangeServiceComponent} from './components/home/external/change-service/change-service.component';
+import {ActivateServiceComponent} from './components/home/external/activate-service/activate-service.component';
+import {ChargeCardComponent} from './components/home/external/charge-card/charge-card.component';
+import {ExtendServiceComponent} from './components/home/external/extend-service/extend-service.component';
 
 const routes: Routes = [
   {
@@ -24,6 +27,9 @@ const routes: Routes = [
           {path: 'data-usage', component: DataUsageComponent},
           {path: 'sessions', component: SessionsComponent},
           {path: 'change-service', component: ChangeServiceComponent},
+          {path: 'activate-service', component: ActivateServiceComponent},
+          {path: 'charge-card', component: ChargeCardComponent},
+          {path: 'extend-service', component: ExtendServiceComponent},
         ]
       },
     ],

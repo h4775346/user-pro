@@ -6,6 +6,9 @@ import {v4 as uuidv4} from 'uuid';
 import {DialogsService} from '../../../../services/other/dialogs-service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {LocalStorageService} from '../../../../services/other/local-storage.service';
+import {WarningModel} from '../../../../Models/warning-model';
+import {DashboardWarningService} from '../../../../services/other/dashboard-warning.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-extend-service',
@@ -21,26 +24,38 @@ export class ExtendServiceComponent implements OnInit, AfterViewInit {
   extensionData;
   loading = false;
   responseMessage;
+  serviceData;
 
   constructor(
-    public dialogRef: MatDialogRef<ExtendServiceComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private userApi: UserApiService,
     public trafficTrans: TrafficTransferService,
     private confirmService: DialogsService,
-    private localStorageService: LocalStorageService) {
+    private localStorageService: LocalStorageService,
+    private warningService: DashboardWarningService,
+    private router: Router) {
   }
 
 
   ngOnInit(): void {
-    this.profileId = this.data.service_id;
   }
 
   ngAfterViewInit() {
+    this.getServiceData();
+  }
+
+  private getServiceData() {
+    this.serviceData = null;
+    this.userApi.getService().subscribe((response: any) => {
+      this.serviceData = response.data;
+      this.profileId = this.serviceData.service_id;
+      this.getAvailableExtensions();
+    });
+  }
+
+  getAvailableExtensions() {
     this.userApi.getAvailableExtensions(this.profileId).subscribe((response: any) => {
       this.extensions = response.data;
     });
-
   }
 
 
@@ -87,7 +102,11 @@ export class ExtendServiceComponent implements OnInit, AfterViewInit {
           if (password !== true) {
             this.localStorageService.SAVE_CURRENT_USER_PASSWORD(password);
           }
-          this.dialogRef.close({extend_ok: true, service_name: this.extensionData.name});
+          this.warningService.createWarning(
+            'Service Extended ( ' + this.extensionData.name + ' ) Successfully!',
+            WarningModel.WARNING_TYPES.success
+          );
+          this.router.navigate(['user', 'home', 'dashboard']);
           break;
         case -1:
           if (response.message === 'rsp_invalid_password') {

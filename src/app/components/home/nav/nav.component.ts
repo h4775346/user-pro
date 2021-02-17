@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NavService} from '../../../services/nav/nav.service';
 import {DashboardWarningService} from '../../../services/other/dashboard-warning.service';
+import {LocalStorageService} from '../../../services/other/local-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +13,10 @@ export class NavComponent implements OnInit {
 
   sideToggled = false;
 
-  constructor(private navService: NavService, public warnings: DashboardWarningService) {
+  constructor(private navService: NavService,
+              public warnings: DashboardWarningService,
+              private localStorageService: LocalStorageService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -23,5 +28,14 @@ export class NavComponent implements OnInit {
 
   sideToggleForceClose(): void {
     this.sideToggled = false;
+  }
+
+  onActivate(event) {
+    window.scroll(0, 0);
+  }
+
+  logout() {
+    this.localStorageService.SET_LOGOUT_STATUS(true);
+    this.router.navigate(['user', 'login']);
   }
 }

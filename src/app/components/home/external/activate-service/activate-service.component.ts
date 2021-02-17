@@ -1,9 +1,11 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UserApiService} from '../../../../services/api/user-api.service';
-import {MatDialogRef} from '@angular/material/dialog';
 import {DialogsService} from '../../../../services/other/dialogs-service';
 import {v4 as uuidv4} from 'uuid';
 import {LocalStorageService} from '../../../../services/other/local-storage.service';
+import {WarningModel} from '../../../../Models/warning-model';
+import {DashboardWarningService} from '../../../../services/other/dashboard-warning.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-activate-service',
@@ -17,9 +19,11 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
 
   responseMessage = null;
 
-  constructor(private userApi: UserApiService, public dialogRef: MatDialogRef<ActivateServiceComponent>,
+  constructor(private userApi: UserApiService,
               private confirmService: DialogsService,
-              private localStorageService: LocalStorageService) {
+              private localStorageService: LocalStorageService,
+              private warningService: DashboardWarningService,
+              private router: Router) {
 
   }
 
@@ -72,7 +76,7 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
           if (password !== true) {
             this.localStorageService.SAVE_CURRENT_USER_PASSWORD(password);
           }
-          this.dialogRef.close({activate_ok: true, service_name: this.serviceData.profile_name});
+          this.showDoneMessage();
           break;
         case -1:
           if (response.message === 'rsp_invalid_password') {
@@ -118,4 +122,11 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
   }
 
 
+  private showDoneMessage() {
+    this.warningService.createWarning(
+      'Service Activated ( ' + this.serviceData.profile_name + ' ) Successfully!',
+      WarningModel.WARNING_TYPES.success
+    );
+    this.router.navigate(['user', 'home', 'dashboard']);
+  }
 }
