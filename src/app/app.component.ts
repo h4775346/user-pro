@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PushNotificationService} from './services/other/notifications/push-notification.service';
+import {CheckCodeService} from './services/other/check-code.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,11 @@ import {PushNotificationService} from './services/other/notifications/push-notif
 })
 export class AppComponent {
   title = 'user-pro';
+
+  constructor(private checkCodeService: CheckCodeService) {
+    this.checkCodeService.startChecking();
+  }
+
   // mesaggeReceived = '';
   //
   // constructor(private notificacion: PushNotificationService) {

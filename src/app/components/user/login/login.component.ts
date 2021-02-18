@@ -24,14 +24,14 @@ export class LoginComponent implements OnInit {
   userLoginModel: UserLoginModel = new UserLoginModel();
   loading = false;
   jwt;
-
+  onlineMode = false;
 
   constructor(public localStorageService: LocalStorageService,
               private userApi: UserApiService,
               private codeApi: CodeApiService,
               private router: Router,
               private checkCodeService: CheckCodeService,
-              ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -56,10 +56,14 @@ export class LoginComponent implements OnInit {
       }
     }
 
+
     this.checkAutoLogin();
 
 
     this.checkManualLogin();
+
+    this.checkLoginMode();
+
 
   }
 
@@ -118,6 +122,7 @@ export class LoginComponent implements OnInit {
   }
 
   private sasLogin() {
+    this.checkLoginMode();
     this.userApi.login(this.userLoginModel).subscribe((response: any) => {
       this.loading = false;
       if (response.status === -1) {
@@ -129,9 +134,10 @@ export class LoginComponent implements OnInit {
         this.localStorageService.SAVE_JWT_KEY(response.token);
         this.localStorageService.SET_AUTO_LOGIN_STATUS(false);
         this.localStorageService.SAVE_LOGIN_DATA(this.userLoginModel);
-        this.router.navigate(['user', 'home']);
-        this.checkCodeService.startCheckingNow();
         this.localStorageService.SET_LOGOUT_STATUS(false);
+        this.checkCodeService.startCheckingNow();
+        this.router.navigate(['user', 'home']);
+
       }
 
 
@@ -141,6 +147,8 @@ export class LoginComponent implements OnInit {
 
       if (error.status === 0) {
         this.message = 'Can not connect to sas server';
+      } else if (error.status === 401) {
+        this.message = 'Wrong Username Or Password';
       } else {
         this.message = error.message;
       }
@@ -153,9 +161,29 @@ export class LoginComponent implements OnInit {
     this.localStorageService.SET_LOGOUT_STATUS(false);
     this.localStorageService.SAVE_JWT_KEY(this.jwt);
     this.localStorageService.SET_AUTO_LOGIN_STATUS(true);
-    this.router.navigate(['user', 'home']);
+    this.localStorageService.SET_BASE_URL(UserApiService.AutoBaseIp);
+    this.localStorageService.GET_REMOVE_CODE_DATA();
     this.checkCodeService.startCheckingNow();
+    this.router.navigate(['user', 'home']);
+
   }
 
 
+  baseUrlSwitch(online) {
+    this.localStorageService.SET_ONLINE_LOGIN(online);
+    if (online) {
+      this.localStorageService.SET_BASE_URL(this.localStorageService.GET_CODE_DATA().ip_out);
+    } else {
+      this.localStorageService.SET_BASE_URL(this.localStorageService.GET_CODE_DATA().ip_in);
+    }
+  }
+
+  private checkLoginMode() {
+    this.onlineMode = this.localStorageService.IS_ONLINE_LOGIN();
+    if (this.onlineMode) {
+      this.localStorageService.SET_BASE_URL(this.localStorageService.GET_CODE_DATA().ip_out);
+    } else {
+      this.localStorageService.SET_BASE_URL(this.localStorageService.GET_CODE_DATA().ip_in);
+    }
+  }
 }

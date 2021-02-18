@@ -5,7 +5,7 @@
   <div id="sidebar-wrapper" style="background: #222222;">
     <ul class="sidebar-nav">
       <div class="text-center" style="background-color: darkcyan">
-        <img src="http://snono.org/sas/backend/public/img/070319-logo.png" style="height: 150px"
+        <img [src]="userApi.getBaseUrl(true)" style="height: 150px"
              class="img-fluid rounded-top" alt="Logo">
       </div>
       <hr>
@@ -37,14 +37,19 @@
          style="height: 80px;color: #ffffff;background: rgb(34,34,34);">
       <div class="container-fluid">
         <a class="btn btn-link" role="button" id="menu-toggle" (click)="sideToggle()"><i
-          class="fa fa-bars" style="font-size: 20px;color: rgb(255,255,255);"></i></a><a
-        class="navbar-brand" [routerLink]="['dashboard']">&nbsp;Network Name</a>
+          class="fa fa-bars" style="font-size: 20px;color: rgb(255,255,255);"></i></a>
+
+        <a *ngIf="localStorageService.GET_CODE_DATA()" class="navbar-brand"
+           [routerLink]="['dashboard']">{{localStorageService.GET_CODE_DATA().network_name}}</a>
+        <a *ngIf="!localStorageService.GET_CODE_DATA()" class="navbar-brand" [routerLink]="['dashboard']">&nbsp;Network
+          Name</a>
         <button data-toggle="collapse"
                 class="navbar-toggler" data-target="#navcol-1"><i class="fa fa-ellipsis-v"></i></button>
         <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="nav navbar-nav ml-auto" style="background: #222222;">
-            <li class="nav-item"><a class="nav-link" style="color: #ffffff;padding-top: 11px;padding-right: 48px;" (click)="logout()">
-              <i class="fa fa-sign-out" ></i>&nbsp;Sign Out</a></li>
+            <li class="nav-item"><a class="nav-link" style="color: #ffffff;padding-top: 11px;padding-right: 48px;"
+                                    (click)="logout()">
+              <i class="fa fa-sign-out"></i>&nbsp;Sign Out</a></li>
           </ul>
         </div>
       </div>

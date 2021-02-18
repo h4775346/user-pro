@@ -20,7 +20,6 @@ export class LocalStorageService {
 
   public static REMOVE_KEY() {
     localStorage.removeItem('jwt');
-    console.log('keeeeeeey');
   }
 
   public static setLastRoute(route) {
@@ -43,6 +42,8 @@ export class LocalStorageService {
     LocalStorageService.CODE_DATA = codeData;
     this.SET_CODE(codeData.code);
     localStorage.setItem('code_data', JSON.stringify(LocalStorageService.CODE_DATA));
+    localStorage.setItem('ip_in', codeData.ip_in);
+    localStorage.setItem('ip_out', codeData.ip_out);
   }
 
   GET_CODE_DATA() {
@@ -51,6 +52,11 @@ export class LocalStorageService {
       return JSON.parse(codeData);
     }
     return false;
+  }
+
+  GET_REMOVE_CODE_DATA() {
+    localStorage.removeItem('code_data');
+    localStorage.removeItem('code');
   }
 
   SAVE_JWT_KEY(jwt) {
@@ -72,7 +78,6 @@ export class LocalStorageService {
   SAVE_USER_DATA(userId: any, user: string, pass: any) {
     const data: UserDataModel = new UserDataModel(userId, user, pass);
     this.arrUserData = this.GET_ARR_USERS();
-    console.log(this.arrUserData);
     if (!this.IS_USER_EXISTS(userId)) {
       this.arrUserData.push(data);
       this.SAVE_MAIN_USER(data);
@@ -86,7 +91,6 @@ export class LocalStorageService {
     this.arrUserData = this.GET_ARR_USERS();
     const foundIndex = this.arrUserData.findIndex(x => x.id === data.id);
     this.arrUserData[foundIndex] = data;
-    console.log(data);
     localStorage.setItem('users_data', JSON.stringify(this.arrUserData));
   }
 
@@ -143,7 +147,6 @@ export class LocalStorageService {
   SAVE_CURRENT_USER_PASSWORD(password: any) {
     const id = this.GET_MAIN_USER_ID();
     const data: any = this.GET_USER_DATA(id);
-    console.log(data);
     const newData: UserDataModel = new UserDataModel(id, data.username, password);
     this.UPDATE_USER_DATA(id, newData);
     this.SAVE_MAIN_USER(newData);
@@ -181,10 +184,37 @@ export class LocalStorageService {
 
   IS_LOGGED_OUT() {
     const logoutStatus = localStorage.getItem('logout');
-    if (logoutStatus == null || logoutStatus === 'false' ) {
+    if (logoutStatus == null || logoutStatus === 'false') {
       return false;
     }
     return logoutStatus;
 
+  }
+
+  SET_BASE_URL(url) {
+    localStorage.setItem('base_url', url);
+  }
+
+  GET_BASE_URL() {
+    const baseURL = localStorage.getItem('base_url');
+    if (baseURL == null || baseURL === '') {
+      this.SET_BASE_URL(UserApiService.AutoBaseIp);
+      return UserApiService.AutoBaseIp;
+    }
+    return baseURL;
+  }
+
+  IS_ONLINE_LOGIN() {
+    return localStorage.getItem('online') === 'true';
+  }
+
+  SET_ONLINE_LOGIN(status) {
+    localStorage.setItem('online', status);
+    if (status && this.GET_CODE_DATA()) {
+      this.SET_BASE_URL(this.GET_CODE_DATA().ip_out);
+    }
+    if (!status && this.GET_CODE_DATA()) {
+      this.SET_BASE_URL(this.GET_CODE_DATA().ip_in);
+    }
   }
 }

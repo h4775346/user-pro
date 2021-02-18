@@ -11,6 +11,8 @@ import {ConfigModule} from '../../Config/config.module';
 export class CheckCodeService {
 
 
+  errorCounter = 0;
+
   constructor(private codeApi: CodeApiService,
               private userApi: UserApiService,
               private localStorageService: LocalStorageService,
@@ -35,9 +37,9 @@ export class CheckCodeService {
 
   startCheckingNow() {
     if (!this.localStorageService.GET_CODE()) {
-      this.checkCode();
+      this.checkCode(false);
     } else {
-      this.getProCodeData();
+      this.getProCodeData(false);
     }
   }
 
@@ -45,8 +47,13 @@ export class CheckCodeService {
     this.userApi.getAdminAutoCode().subscribe((response: any) => {
       this.localStorageService.SET_CODE((response.data.lid - 512));
       this.getProCodeData(fromTimer);
+      this.errorCounter = 0;
     }, error => {
       this.startChecking();
+      if (this.errorCounter++ >= 3) {
+        this.router.navigate(['user', 'login']);
+      }
+
     });
 
   }
@@ -55,8 +62,12 @@ export class CheckCodeService {
     this.codeApi.getCodeData().subscribe((codeData: any) => {
       this.localStorageService.SAVE_CODE_DATA(codeData);
       this.checkCodeExpiration(fromTimer);
+      this.errorCounter = 0;
     }, error => {
       this.startChecking();
+      if (this.errorCounter++ >= 3) {
+        this.router.navigate(['user', 'login']);
+      }
     });
   }
 

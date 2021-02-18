@@ -16,7 +16,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class UserComponent implements OnInit, AfterViewInit {
 
   currentText = 'Loading ...';
-  loading = true;
+  loading = false;
 
   redirectToPage = '/user/home';
 
@@ -25,42 +25,29 @@ export class UserComponent implements OnInit, AfterViewInit {
               private localStorageService: LocalStorageService,
               private checkCodeService: CheckCodeService
   ) {
-    this.redirectToPage = this.getLastRedirectPage();
   }
 
   ngOnInit(): void {
-    if (this.localStorageService.IS_LOGGED_OUT()) {
-      this.loading = true;
-      this.redirectToPage = '/user/login';
-      this.router.navigateByUrl(this.redirectToPage);
+    if (this.localStorageService.GET_JWT_KEY() == null) {
+      this.testAutoLogin();
       return;
     }
-    if (!this.localStorageService.JWT_EXISTED()) {
-      this.testAutoLogin();
-    } else {
-      this.loading = false;
-      if (NavService.CURRENT_ROUTE === '/user' || NavService.CURRENT_ROUTE === '') {
-        this.router.navigateByUrl(this.redirectToPage);
-      }
-      this.checkCodeService.startCheckingNow();
-    }
+    this.checkCodeService.startCheckingNow();
+    this.checkNavigation();
+
   }
 
   testAutoLogin() {
     this.loading = true;
-    this.userApi.autologin().subscribe((response: JsonObject) => {
+    this.userApi.autologin().subscribe((response: any) => {
       this.loading = false;
       if (response.status === 200) {
         this.localStorageService.SAVE_JWT_KEY(response.token);
-        this.localStorageService.SET_AUTO_LOGIN_STATUS(true);
-        this.router.navigateByUrl(this.redirectToPage);
         this.checkCodeService.startCheckingNow();
-      } else {
-        this.currentText = response.message.toString();
+        this.checkNavigation();
       }
-    }, (error: HttpErrorResponse) => {
+    }, error => {
       this.loading = false;
-      LocalStorageService.SET_AUTO_LOGIN_STATUS(false);
       this.router.navigate(['user', 'login']);
     });
   }
@@ -69,10 +56,14 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   }
 
-  getLastRedirectPage() {
-    console.log('you will navigate to ' + LocalStorageService.getLastRoute());
-    return LocalStorageService.getLastRoute();
+
+  private checkNavigation() {
+    if (this.localStorageService.IS_LOGGED_OUT()) {
+      this.router.navigate(['user', 'login']);
+      return;
+    }
+    if (this.router.url === '/user') {
+      this.router.navigateByUrl(LocalStorageService.getLastRoute());
+    }
   }
-
-
 }
