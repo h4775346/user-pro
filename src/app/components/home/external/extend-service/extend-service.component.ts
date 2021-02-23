@@ -9,6 +9,7 @@ import {LocalStorageService} from '../../../../services/other/local-storage.serv
 import {WarningModel} from '../../../../Models/warning-model';
 import {DashboardWarningService} from '../../../../services/other/dashboard-warning.service';
 import {Router} from '@angular/router';
+import {LocalService} from '../../../../services/api/local-service';
 
 @Component({
   selector: 'app-extend-service',
@@ -32,7 +33,9 @@ export class ExtendServiceComponent implements OnInit, AfterViewInit {
     private confirmService: DialogsService,
     private localStorageService: LocalStorageService,
     private warningService: DashboardWarningService,
-    private router: Router) {
+    private router: Router,
+    public locale: LocalService,
+    private dialogsService: DialogsService) {
   }
 
 
@@ -76,8 +79,9 @@ export class ExtendServiceComponent implements OnInit, AfterViewInit {
 
   extendService() {
     this.confirmService.requestConfirmation(
-      'Extending Service',
-      'You will Extend' + ' ' + this.extensionData.name + ' ' + 'and pay' + ' ' + this.getFloatOf(this.extensionData.price))
+      this.locale.get('extend_service'),
+      this.locale.get('you_will_extend') + ' ' + this.extensionData.name +
+      ' ' + this.locale.get('and_pay') + ' ' + this.getFloatOf(this.extensionData.price))
       .subscribe((confirm: boolean) => {
         if (confirm) {
           this.startExtending();
@@ -102,10 +106,16 @@ export class ExtendServiceComponent implements OnInit, AfterViewInit {
           if (password !== true) {
             this.localStorageService.SAVE_CURRENT_USER_PASSWORD(password);
           }
+
+
           this.warningService.createWarning(
-            'Service Extended ( ' + this.extensionData.name + ' ) Successfully!',
+            this.extensionData.name + ' ' + this.locale.get('extended_successfully'),
             WarningModel.WARNING_TYPES.success
           );
+
+          this.dialogsService.showMessage(
+            this.locale.get('successful_process'), this.extensionData.name + ' ' + this.locale.get('extended_successfully'));
+
           this.router.navigate(['user', 'home', 'dashboard']);
           break;
         case -1:
@@ -113,14 +123,14 @@ export class ExtendServiceComponent implements OnInit, AfterViewInit {
             if (password === true) {
               this.requestPassword();
             } else {
-              this.responseMessage = 'Invalid Password';
+              this.responseMessage = this.locale.get('invalid_password');
             }
           } else {
             if (password !== true) {
               this.localStorageService.SAVE_CURRENT_USER_PASSWORD(password);
             }
             if (response.message === 'rsp_insufficient_balance') {
-              this.responseMessage = 'You Dont Have Enough Balance';
+              this.responseMessage = this.responseMessage = this.locale.get('mybe_you_dont_have_enaugh');
             } else {
               this.responseMessage = response.message;
             }
@@ -143,7 +153,8 @@ export class ExtendServiceComponent implements OnInit, AfterViewInit {
       this.startExtending(mainUser.password);
       return;
     }
-    this.confirmService.requestInput('Your Account Password', 'Enter Password', 'password').subscribe(response => {
+    this.confirmService.requestInput(this.locale.get('password'), this.locale.get('enter_password'),
+      'password').subscribe(response => {
       if (response) {
         this.startExtending(response.text);
       }

@@ -1,46 +1,65 @@
-<div class="container-fluid">
-  <div class="row mh-100vh">
-    <div
-      class="col-10 col-sm-8 col-md-6 col-lg-6 offset-1 offset-sm-2 offset-md-3 offset-lg-0 align-self-center d-lg-flex align-items-lg-center align-self-lg-stretch bg-white p-5 rounded rounded-lg-0 my-5 my-lg-0"
-      id="login-block">
+<div [(dir)]="locale.dir" style="text-align: start">
+  <div class="container-fluid">
+    <div class="row mh-100vh">
+      <div
+        class="col-10 col-sm-8 col-md-6 col-lg-6 offset-1 offset-sm-2 offset-md-3 offset-lg-0 align-self-center d-lg-flex align-items-lg-center align-self-lg-stretch bg-white p-5 rounded rounded-lg-0 my-5 my-lg-0"
+        id="login-block" style="margin-left: auto;margin-right: auto">
 
-      <div class="m-auto w-lg-75 w-xl-50">
-        <div *ngIf="message" class="alert alert-warning" role="alert">
-          <strong> <i class="fa fa-exclamation-triangle"></i> {{message}}</strong>
+
+        <div class="m-auto w-lg-75 w-xl-50">
+
+
+          <div *ngIf="message" class="alert alert-warning" role="alert">
+            <strong> <i class="fa fa-exclamation-triangle"></i> {{message}}</strong>
+          </div>
+
+
+          <h2 class="text-info text-center font-weight-light mb-5"><i class="fa fa-wifi"></i> {{locale.get('login')}}</h2>
+          <form (ngSubmit)="login()">
+
+            <div class="form-group"><label for="language" class="text-secondary">{{locale.get('language')}}</label>
+              <select #language class="custom-select" id="language" name="extension" required=""
+                      (change)="locale.change(language.value)">
+                <option class="my-2" value="ar" [selected]="locale.get('lan') === 'ar'">العربية</option>
+                <option class="my-2" value="en" [selected]="locale.get('lan') === 'en'">English</option>
+              </select>
+            </div>
+
+            <div class="form-group"><label for="code" class="text-secondary">{{locale.get('code')}}</label>
+              <input (click)="disableCode=false" class="form-control" [readOnly]="code && disableCode" [(ngModel)]="code"
+                     id="code" name="code" type="text" required>
+            </div>
+
+            <div class="form-group"><label for="username" class="text-secondary">{{locale.get('username')}}</label>
+              <input [(ngModel)]="userLoginModel.username" class="form-control" id="username" name="username" type="text"
+                     required>
+            </div>
+            <div class="form-group"><label for="password" class="text-secondary">{{locale.get('password')}}</label>
+              <input [(ngModel)]="userLoginModel.password" class="form-control" id="password" name="password"
+                     type="password" required>
+            </div>
+
+            <div class="form-check my-2"><input #checkSwitch [checked]="onlineMode"
+                                                (change)="baseUrlSwitch(checkSwitch.checked)" class="form-check-input"
+                                                type="checkbox" id="formCheck-1" name="outside"/><label
+              class="form-check-label mr-3" for="formCheck-1">{{locale.get('online_login')}}</label></div>
+
+
+            <app-spinner *ngIf="loading"></app-spinner>
+            <button *ngIf="!loading" class="btn btn-info mt-2  w-100" type="submit">{{locale.get('login')}}</button>
+            <button *ngIf="jwt" class="btn btn-danger mt-2 w-100" type="button"
+                    (click)="autoLogin()">{{locale.get('auto_login')}}</button>
+          </form>
+          <!--        <p class="mt-3 mb-0"><a class="text-info small" href="#">Do not have account ? SignUp</a></p>-->
+          <!--        <p class="mt-3 mb-0"><a class="text-info small" href="#">Forgot your username or password?</a></p>-->
         </div>
-
-        <h2 class="text-info text-center font-weight-light mb-5"><i class="fa fa-wifi"></i> Internet</h2>
-        <form (ngSubmit)="login()">
-
-          <div class="form-group"><label for="code" class="text-secondary">Code</label>
-            <input (click)="disableCode=false" class="form-control" [readOnly]="code && disableCode" [(ngModel)]="code"
-                   id="code" name="code" type="text" required>
-          </div>
-
-          <div class="form-group"><label for="username" class="text-secondary">Username</label>
-            <input [(ngModel)]="userLoginModel.username" class="form-control" id="username" name="username" type="text"
-                   required>
-          </div>
-          <div class="form-group"><label for="password" class="text-secondary">Password</label>
-            <input [(ngModel)]="userLoginModel.password" class="form-control" id="password" name="password"
-                   type="password" required>
-          </div>
-
-          <div class="form-check my-2"><input #checkSwitch [checked]="onlineMode" (change)="baseUrlSwitch(checkSwitch.checked)"  class="form-check-input" type="checkbox" id="formCheck-1" name="outside"/><label
-            class="form-check-label" for="formCheck-1">Online Login</label></div>
-
-
-          <app-spinner *ngIf="loading"></app-spinner>
-          <button *ngIf="!loading" class="btn btn-info mt-2  w-100" type="submit">Log In</button>
-          <button *ngIf="jwt" class="btn btn-danger mt-2 w-100" type="button" (click)="autoLogin()">Auto Login</button>
-        </form>
-        <!--        <p class="mt-3 mb-0"><a class="text-info small" href="#">Do not have account ? SignUp</a></p>-->
-        <!--        <p class="mt-3 mb-0"><a class="text-info small" href="#">Forgot your username or password?</a></p>-->
       </div>
-    </div>
-    <div class="col-lg-6 d-flex align-items-end" id="bg-block"
-         style="background: url('../../../../assets/img/network5.png') center center / cover;">
-      <p class="ml-auto small text-dark mb-2"><br></p>
+      <div class="col-lg-6 d-flex align-items-end" id="bg-block"
+           style="background: url('../../../../assets/img/network5.png') center center / cover;">
+        <p class="ml-auto small text-dark mb-2"><br></p>
+      </div>
     </div>
   </div>
 </div>
+
+

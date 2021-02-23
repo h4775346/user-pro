@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PushNotificationService} from './services/other/notifications/push-notification.service';
 import {CheckCodeService} from './services/other/check-code.service';
+import {LocalService} from './services/api/local-service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import {CheckCodeService} from './services/other/check-code.service';
 export class AppComponent {
   title = 'user-pro';
 
-  constructor(private checkCodeService: CheckCodeService) {
+  constructor(private checkCodeService: CheckCodeService, public locale: LocalService) {
     this.checkCodeService.startChecking();
   }
 

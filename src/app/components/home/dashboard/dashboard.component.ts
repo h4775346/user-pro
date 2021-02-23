@@ -9,6 +9,8 @@ import {WarningModel} from '../../../Models/warning-model';
 import {ActivateServiceComponent} from '../external/activate-service/activate-service.component';
 import {ExtendServiceComponent} from '../external/extend-service/extend-service.component';
 import {LocalStorageService} from '../../../services/other/local-storage.service';
+import {LocalService} from '../../../services/api/local-service';
+import {DialogsService} from '../../../services/other/dialogs-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +27,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               public trafficTransfer: TrafficTransferService,
               public dialog: MatDialog,
               private warningService: DashboardWarningService,
-              private localStorageService: LocalStorageService) {
+              private localStorageService: LocalStorageService,
+              public locale: LocalService,
+              private dialogsService: DialogsService) {
 
   }
 
@@ -56,6 +60,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.serviceData = null;
     this.userApi.getService().subscribe((response: any) => {
       this.serviceData = response.data;
+      this.checkServiceExpiration();
     });
   }
 
@@ -136,4 +141,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
 
+  private checkServiceExpiration() {
+    this.dialogsService.showEndDialog();
+  }
 }

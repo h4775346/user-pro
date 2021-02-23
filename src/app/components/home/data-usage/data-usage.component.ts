@@ -3,6 +3,7 @@ import {ChartService} from '../../../services/other/chart.service';
 import {TrafficModel} from '../../../Models/traffic-model';
 import {UserApiService} from '../../../services/api/user-api.service';
 import {TrafficTransferService} from '../../../services/other/traffic-transfer.service';
+import {LocalService} from '../../../services/api/local-service';
 
 @Component({
   selector: 'app-data-usage',
@@ -16,7 +17,10 @@ export class DataUsageComponent implements OnInit, AfterViewInit {
   trafficResponse;
   trafficData: any;
 
-  constructor(public chartService: ChartService, private userApi: UserApiService, public trafficConverter: TrafficTransferService) {
+  constructor(public chartService: ChartService,
+              private userApi: UserApiService,
+              public trafficConverter: TrafficTransferService,
+              public locale: LocalService) {
   }
 
   ngOnInit(): void {

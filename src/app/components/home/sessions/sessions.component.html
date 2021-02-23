@@ -1,18 +1,19 @@
 <div class="card-body mt-5" style="background: white">
-  <h1 class="card-title alert alert-secondary">Sessions</h1>
+  <h1 class="card-title alert alert-secondary">{{locale.get('sessions')}}</h1>
 
   <app-spinner *ngIf="!responseData"></app-spinner>
   <div class="table-responsive" *ngIf="responseData">
     <table class="table table-hover">
       <thead>
       <tr>
-        <th>Started On</th>
-        <th>Ended On</th>
-        <th>IP</th>
-        <th>Download</th>
-        <th>Upload</th>
-        <th>total</th>
-        <th>MAC</th>
+        <th>{{locale.get('started_on')}}</th>
+        <th>{{locale.get('ended_on')}}</th>
+        <th>{{locale.get('session_time')}}</th>
+        <th>{{locale.get('ip')}}</th>
+        <th>{{locale.get('download')}}</th>
+        <th>{{locale.get('upload')}}</th>
+        <th>{{locale.get('total_usage')}}</th>
+        <th>{{locale.get('mac')}}</th>
 
       </tr>
       </thead>
@@ -21,6 +22,7 @@
 
         <td>{{session.acctstarttime}}</td>
         <td>{{session.acctstoptime}}</td>
+        <td>{{ get_time_diff(session.acctstarttime,session.acctstoptime)}}</td>
         <td>{{session.framedipaddress}}</td>
         <td>{{trafficConverter.bytesToSize(session.acctoutputoctets)}}</td>
         <td>{{trafficConverter.bytesToSize(session.acctinputoctets)}}</td>

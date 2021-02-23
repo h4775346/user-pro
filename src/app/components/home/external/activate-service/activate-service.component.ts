@@ -6,6 +6,7 @@ import {LocalStorageService} from '../../../../services/other/local-storage.serv
 import {WarningModel} from '../../../../Models/warning-model';
 import {DashboardWarningService} from '../../../../services/other/dashboard-warning.service';
 import {Router} from '@angular/router';
+import {LocalService} from '../../../../services/api/local-service';
 
 @Component({
   selector: 'app-activate-service',
@@ -23,7 +24,8 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
               private confirmService: DialogsService,
               private localStorageService: LocalStorageService,
               private warningService: DashboardWarningService,
-              private router: Router) {
+              private router: Router,
+              public locale: LocalService) {
 
   }
 
@@ -56,8 +58,9 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
   activateService() {
 
     this.confirmService.requestConfirmation(
-      'Activating Service',
-      'You will activate' + ' ' + this.serviceData.profile_name + ' ' + 'and pay' + ' ' + this.serviceData.price)
+      this.locale.get('activate_current'),
+      this.locale.get('you_will_activate') + ' ' + this.serviceData.profile_name + ' ' +
+      this.locale.get('and_pay') + ' ' + this.serviceData.price)
       .subscribe((confirm: boolean) => {
         if (confirm) {
           this.startActivatingService();
@@ -83,14 +86,14 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
             if (password === true) {
               this.requestPassword();
             } else {
-              this.responseMessage = 'Invalid Password';
+              this.responseMessage = this.locale.get('invalid_password');
             }
           } else {
             if (password !== true) {
               this.localStorageService.SAVE_CURRENT_USER_PASSWORD(password);
             }
             if (response.message === 'rsp_insufficient_balance') {
-              this.responseMessage = 'You Dont Have Enough Balance';
+              this.responseMessage = this.locale.get('mybe_you_dont_have_enaugh');
             } else {
               this.responseMessage = response.message;
             }
@@ -114,7 +117,8 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
       this.startActivatingService(mainUser.password);
       return;
     }
-    this.confirmService.requestInput('Your Account Password', 'Enter Password', 'password').subscribe(response => {
+    this.confirmService.requestInput(this.locale.get('password'), this.locale.get('enter_password'),
+      'password').subscribe(response => {
       if (response) {
         this.startActivatingService(response.text);
       }
@@ -124,7 +128,7 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
 
   private showDoneMessage() {
     this.warningService.createWarning(
-      'Service Activated ( ' + this.serviceData.profile_name + ' ) Successfully!',
+       this.serviceData.profile_name +  ' ' + this.locale.get('activated_successfully'),
       WarningModel.WARNING_TYPES.success
     );
     this.router.navigate(['user', 'home', 'dashboard']);

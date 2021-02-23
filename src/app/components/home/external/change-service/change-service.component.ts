@@ -5,6 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 import {DashboardWarningService} from '../../../../services/other/dashboard-warning.service';
 import {WarningModel} from '../../../../Models/warning-model';
 import {LocalStorageService} from '../../../../services/other/local-storage.service';
+import {LocalService} from '../../../../services/api/local-service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class ChangeServiceComponent implements OnInit, AfterViewInit {
     private userApi: UserApiService,
     private dialogsService: DialogsService,
     private warningService: DashboardWarningService,
-    private localStorageService: LocalStorageService) {
+    private localStorageService: LocalStorageService,
+    public locale: LocalService) {
   }
 
   ngOnInit(): void {
@@ -51,8 +53,8 @@ export class ChangeServiceComponent implements OnInit, AfterViewInit {
   changeService(service) {
     this.selectedService = service;
     this.dialogsService.requestConfirmation(
-      'Extending Service',
-      'You will change your service to' + ' ' + service.name
+      this.locale.get('extend_service'),
+      this.locale.get('you_will_change_service') + ' ' + service.name
     )
       .subscribe((confirm: boolean) => {
         if (confirm) {
@@ -76,11 +78,11 @@ export class ChangeServiceComponent implements OnInit, AfterViewInit {
             this.localStorageService.SAVE_CURRENT_USER_PASSWORD(password);
           }
           this.warningService.createWarning(
-            'Your service changed to (' + this.selectedService.name + ')',
+            this.locale.get('service_changed') + this.selectedService.name,
             WarningModel.WARNING_TYPES.success
           );
           this.dialogsService.showMessage(
-            'successfull process', 'Your service changed to (' + this.selectedService.name + ')');
+            this.locale.get('successful_process'), this.locale.get('service_changed') + this.selectedService.name);
           this.ngAfterViewInit();
           break;
         case -1:
@@ -90,7 +92,7 @@ export class ChangeServiceComponent implements OnInit, AfterViewInit {
 
           if (response.message === 'rsp_service_change_user_active') {
             this.dialogsService.showMessage(
-              'something went wrong', 'Your Are Still Active, You can not change service now');
+              this.locale.get('something_went_wrong'), this.locale.get('cant_change_service_in_active_user'));
           } else {
             this.warningService.createWarning(
               response.message,
@@ -102,7 +104,7 @@ export class ChangeServiceComponent implements OnInit, AfterViewInit {
             this.requestPassword();
           } else {
             this.dialogsService.showMessage(
-              'something went wrong', 'Invalid Password');
+              this.locale.get('something_went_wrong'), this.locale.get('invalid_password'));
           }
           break;
 
@@ -111,7 +113,7 @@ export class ChangeServiceComponent implements OnInit, AfterViewInit {
             this.localStorageService.SAVE_CURRENT_USER_PASSWORD(password);
           }
           this.dialogsService.showMessage(
-            'something went wrong', response.message);
+            this.locale.get('something_went_wrong'), response.message);
           break;
       }
     });
@@ -124,7 +126,7 @@ export class ChangeServiceComponent implements OnInit, AfterViewInit {
       this.startChangingService(mainUser.password);
       return;
     }
-    this.dialogsService.requestInput('Your Account Password', 'Enter Password', 'password').subscribe(response => {
+    this.dialogsService.requestInput(this.locale.get('password'), this.locale.get('enter_password'), 'password').subscribe(response => {
       if (response) {
         this.startChangingService(response.text);
       }

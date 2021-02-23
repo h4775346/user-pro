@@ -7,6 +7,7 @@ import {NavService} from '../../services/nav/nav.service';
 import {CodeApiService} from '../../services/api/code-api.service';
 import {CheckCodeService} from '../../services/other/check-code.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {LocalService} from '../../services/api/local-service';
 
 @Component({
   selector: 'app-user',
@@ -23,7 +24,8 @@ export class UserComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private userApi: UserApiService,
               private localStorageService: LocalStorageService,
-              private checkCodeService: CheckCodeService
+              private checkCodeService: CheckCodeService,
+              public locale: LocalService
   ) {
   }
 

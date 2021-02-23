@@ -1,0 +1,126 @@
+{
+  "configVersion": 1,
+  "timestamp": 1613674486785,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/main-es2015.6056e4f67ec9128e87f8.js",
+        "/main-es5.6056e4f67ec9128e87f8.js",
+        "/manifest.webmanifest",
+        "/ngsw-worker.js",
+        "/polyfills-es2015.cb668c0683dd2d5b96f4.js",
+        "/polyfills-es5.d3b862031719a8f9fe08.js",
+        "/runtime-es2015.0811dcefd377500b5b1a.js",
+        "/runtime-es5.0811dcefd377500b5b1a.js",
+        "/safety-worker.js",
+        "/scripts.9a14e0e363d6564475ec.js",
+        "/styles.33a21c7dca48496aa116.css",
+        "/worker-basic.min.js"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/01.0a3750e6fdb29fcd632e.png",
+        "/02.351bd6828f980ec53eb3.png",
+        "/03.e438ea2aabdb1087dc4f.png",
+        "/04.0284d042a6c29213aaa1.png",
+        "/05.5014f9cce435c71ade63.png",
+        "/06.21612b9d3e9d84e7e876.png",
+        "/07.f8da0281186df8f17f73.png",
+        "/08.975f7e0074400e7561ba.png",
+        "/09.fd19309a1932b4751387.png",
+        "/Cairo-Regular.81b37df3b28d39765960.ttf",
+        "/arrow_left.270f72df47e036d9cfa1.svg",
+        "/arrow_right.d9ccc77c8240ad0dc272.svg",
+        "/assets/fonts/Cairo-Regular.ttf",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/img/network5.png",
+        "/fontawesome-webfont.674f50d287a8c48dc19b.eot",
+        "/fontawesome-webfont.912ec66d7572ff821749.svg",
+        "/fontawesome-webfont.af7ae505a9eed503f8b8.woff2",
+        "/fontawesome-webfont.b06871f281fee6b241d6.ttf",
+        "/fontawesome-webfont.fee66e712a8a08eef580.woff"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/01.0a3750e6fdb29fcd632e.png": "7c046ea4b1669da4eb81acccd7fc58b00201543d",
+    "/02.351bd6828f980ec53eb3.png": "9775bb2755b51c9eb03a3057eaf3914dc3149a6b",
+    "/03.e438ea2aabdb1087dc4f.png": "c284f2c9ece402ccc1301b4301252476864235c0",
+    "/04.0284d042a6c29213aaa1.png": "2816672fcbef8e08b431d600f26b119e2122eaa6",
+    "/05.5014f9cce435c71ade63.png": "8d9fe47653c2615fd4a1e861e882e2efdb0f34a0",
+    "/06.21612b9d3e9d84e7e876.png": "9d566536e859c18075d00e7f8cd6c490d310c089",
+    "/07.f8da0281186df8f17f73.png": "078e49f4fa97e117da76cbef2b492e8cf92d0d45",
+    "/08.975f7e0074400e7561ba.png": "b3916a95cb81602b7bd41eaefa92eb3a8fd39b70",
+    "/09.fd19309a1932b4751387.png": "4d1c1ec2c710745ddcc43fdd0ae41d3095398a77",
+    "/Cairo-Regular.81b37df3b28d39765960.ttf": "2c9067476ae5fb4a3590970fa66c6451f36d13f5",
+    "/arrow_left.270f72df47e036d9cfa1.svg": "fb5b615955042a7c6aa16b1f0e8dcbdb279a8ac0",
+    "/arrow_right.d9ccc77c8240ad0dc272.svg": "fac5123a15d035a642b74740b89636e2ace09810",
+    "/assets/fonts/Cairo-Regular.ttf": "2c9067476ae5fb4a3590970fa66c6451f36d13f5",
+    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "/assets/img/network5.png": "2128852f04f87e2182cfbc2043058df2f626c155",
+    "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
+    "/fontawesome-webfont.674f50d287a8c48dc19b.eot": "d980c2ce873dc43af460d4d572d441304499f400",
+    "/fontawesome-webfont.912ec66d7572ff821749.svg": "98a8aa5cf7d62c2eff5f07ede8d844b874ef06ed",
+    "/fontawesome-webfont.af7ae505a9eed503f8b8.woff2": "d6f48cba7d076fb6f2fd6ba993a75b9dc1ecbf0c",
+    "/fontawesome-webfont.b06871f281fee6b241d6.ttf": "13b1eab65a983c7a73bc7997c479d66943f7c6cb",
+    "/fontawesome-webfont.fee66e712a8a08eef580.woff": "28b782240b3e76db824e12c02754a9731a167527",
+    "/index.html": "630224e931fdedbfabda782b5b27fbdedec7df40",
+    "/main-es2015.6056e4f67ec9128e87f8.js": "104752ccfc4ee960766b61fc898eca6af3403677",
+    "/main-es5.6056e4f67ec9128e87f8.js": "8e34c7d696fbaeea5ecb7e8ad7d125c42c7f9232",
+    "/manifest.webmanifest": "4801ae07a0d2ff2ff1b1a9bd47ad8be0c526a44c",
+    "/ngsw-worker.js": "3798e7f10ebdd6f55cacf4010af1fe5085cf6c16",
+    "/polyfills-es2015.cb668c0683dd2d5b96f4.js": "c0a90ad18c5d78e88361db1364ac8564b1ceea89",
+    "/polyfills-es5.d3b862031719a8f9fe08.js": "9573447812bfa7ab06cf688bb2dd83e237c44323",
+    "/runtime-es2015.0811dcefd377500b5b1a.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/runtime-es5.0811dcefd377500b5b1a.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
+    "/safety-worker.js": "ae5c8be3955e38edeeec09ed94b63d1e57f003c9",
+    "/scripts.9a14e0e363d6564475ec.js": "572ffbdf651e413f278d944fce6d7a4013021f75",
+    "/styles.33a21c7dca48496aa116.css": "b448d84640a8ceaa84558071287bee0ab0eb9e91",
+    "/worker-basic.min.js": "ae5c8be3955e38edeeec09ed94b63d1e57f003c9"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

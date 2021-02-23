@@ -9,6 +9,7 @@ import {CheckCodeService} from '../../../services/other/check-code.service';
 import {UserDataModel} from '../../../Models/user-data-model';
 import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 import {ConfigModule} from '../../../Config/config.module';
+import {LocalService} from '../../../services/api/local-service';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
               private codeApi: CodeApiService,
               private router: Router,
               private checkCodeService: CheckCodeService,
+              public locale: LocalService,
   ) {
   }
 
@@ -56,14 +58,9 @@ export class LoginComponent implements OnInit {
       }
     }
 
-
     this.checkAutoLogin();
-
-
     this.checkManualLogin();
-
     this.checkLoginMode();
-
 
   }
 

@@ -1,3 +1,7 @@
+
+h1,h2,h3,h4,h5,h6{
+  font-family: CairoFont, serif;
+}
 .pricingTable {
   border: 1px solid #dbdbdb;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
@@ -71,7 +75,7 @@
 .btn-block {
   width: 50%;
   margin: 0 auto;
-  background: #6c6c6c;
+  background: #25363c;
   border: 1px solid #6c6c6c;
   padding: 10px 0;
   color: #fff;
@@ -80,10 +84,11 @@
   transition: 0.3s ease;
 }
 
+
 .pricingTable .btn-block:hover {
-  background: #fff;
-  color: #008b8b;
-  border: 1px solid #008b8b;
+  background: #008b8b;
+  color: #000000;
+  border: 1px solid #ffffff;
 }
 
 .pricingTable.purple .pricing-plans {

@@ -3,6 +3,7 @@ import {ConfirmDialogComponent, ConfirmDialogModel} from '../../components/home/
 import {MatDialog} from '@angular/material/dialog';
 import {InputDialogComponent, InputDialogModel} from '../../components/home/external/dialogs/input-dialog/input-dialog.component';
 import {MessageDialogComponent, MessageDialogModel} from '../../components/home/external/dialogs/message-dialog/message-dialog.component';
+import {EndComponent} from '../../components/home/external/end/end.component';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,12 @@ export class DialogsService {
     });
 
     return dialogRef.afterClosed();
+  }
+
+  showEndDialog() {
+    this.dialog.open(EndComponent, {
+      panelClass: 'app-full-bleed-dialog',
+    });
   }
 
 

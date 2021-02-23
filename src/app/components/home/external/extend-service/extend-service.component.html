@@ -1,12 +1,12 @@
 <div class=" d-flex justify-content-center">
   <div class="mt-5 bg-white pb-5 card pt-3 px-2" style="width: 100%; max-width: 500px">
-    <h1 class="card-header">Extend Service</h1>
+    <h1 class="card-header">{{locale.get('extend_service')}}</h1>
     <form (ngSubmit)="extendService()">
       <h3 class="text-center">Select Extension</h3>
       <div class="form-group">
         <select class="custom-select" name="extension" required="" [(ngModel)]="selectedExtensionId"
                 (change)="getExtensionData()">
-          <option value="-1" class="my-2" disabled selected>Select Extension</option>
+          <option value="-1" class="my-2" disabled selected>{{locale.get('select_the_new_extension')}}</option>
           <option
             *ngFor="let extension of extensions"
             value="{{extension.id}}" class="my-2">{{extension.name}}</option>
@@ -27,48 +27,55 @@
         <hr>
         <div class="col plan price py-2 alert-secondary wow fadeInDown">
           <ul class="list-group">
+
             <li class="list-group-item heading  py-3" style="text-align: center;">
               <span class="price" style="font-size: 40px;">{{getFloatOf(extensionData.price)}}</span>
               <i class="fa fa-money" style="font-size: 20px;"></i></li>
+
+
             <li *ngIf="extensionData.expiration_amount" class="list-group-item list-group-item-success"
-                style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">expiration_amount</span>
+                style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">{{locale.get('expiration_amount')}}</span>
               <hr>
               <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
                 style="">{{extensionData.expiration_amount}}</span>
             </li>
-            <li *ngIf="extensionData.expiration_unit" class="list-group-item list-group-item-success"
-                style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">expiration_unit</span>
-              <hr>
-              <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
-                style="">{{extensionData.expiration_unit}}</span>
-            </li>
+
+
             <li *ngIf="extensionData.traffic_amount" class="list-group-item list-group-item-success"
                 style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span
-              style="">traffic_amount</span>
+              style="">{{locale.get('traffic_amount')}}</span>
               <hr>
               <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
                 style="">{{trafficTrans.MegaToSize(extensionData.traffic_amount)}}</span>
             </li>
+
+
             <li *ngIf="extensionData.download_amount" class="list-group-item list-group-item-success"
-                style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">download_amount</span>
+                style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span style="">{{locale.get('download_amount')}}</span>
               <hr>
               <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
                 style="">{{trafficTrans.MegaToSize(extensionData.download_amount)}}</span>
             </li>
+
+
             <li *ngIf="extensionData.upload_amount" class="list-group-item list-group-item-success"
                 style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span
-              style="">upload_amount</span>
+              style="">{{locale.get('upload_amount')}}</span>
               <hr>
               <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
                 style="">{{trafficTrans.MegaToSize(extensionData.upload_amount)}}</span>
             </li>
+
+
             <li *ngIf="extensionData.uptime_amount" class="list-group-item list-group-item-success"
                 style="margin-top: 5px;margin-bottom: 3px;text-align: center;"><span
-              style="">uptime_amount</span>
+              style="">{{locale.get('upload_amount')}}</span>
               <hr>
               <i class="fa fa-plus" style="margin-right: 3px;margin-left: 3px;"></i><span
                 style="">{{extensionData.uptime_amount}}</span>
             </li>
+
+
           </ul>
         </div>
 
@@ -92,7 +99,7 @@
         <mat-option *ngIf="loading" style="text-align: center;">
             <span class="spinner-border spinner-border-sm" style="vertical-align: middle" role="status"
                   aria-hidden="true"></span>
-          Extending...
+          {{locale.get('extending')}}...
         </mat-option>
 
       </button>

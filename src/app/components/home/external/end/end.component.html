@@ -1,0 +1,15 @@
+<app-spinner *ngIf="!serviceData"></app-spinner>
+<div *ngIf="serviceData" class="photo-card" [style]="{background:color}">
+  <div class="photo-background"
+       style="background: url('') center / contain no-repeat;margin: 10px;"></div>
+  <div class="photo-details">
+    <h1>{{title}}</h1>
+    <p>{{message}}</p>
+    <div class="photo-tags">
+      <ul class="justify-content-center" style="margin-top: 36px;">
+        <li><a href="#" style="font-size: 19px;">Charge Card</a></li>
+        <li></li>
+      </ul>
+    </div>
+  </div>
+</div>

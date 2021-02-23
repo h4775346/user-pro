@@ -5,8 +5,8 @@
     <label for="month_year_selector" class="mx-1">
       <select style="font-size: large" class="custom-select" name="data_type_show" id="month_year_selector"
               [(ngModel)]="trafficModel.report_type">
-        <option value="daily">Daily</option>
-        <option value="monthly">Monthly</option>
+        <option value="daily">{{locale.get('daily')}}</option>
+        <option value="monthly">{{locale.get('monthly')}}</option>
       </select>
     </label>
     <label for="month_picker" *ngIf="trafficModel.report_type == 'daily'">
@@ -18,7 +18,8 @@
              max="2099" value="{{getFullYear()}}" step="1" id="year_picker" name="year_picker"/>
     </label>
 
-    <button class="btn btn-primary mx-1" style="width: 100%" type="submit" id="btn_submit_month">Get Data</button>
+    <button class="btn btn-primary mx-1" style="width: 100%" type="submit"
+            id="btn_submit_month">{{locale.get('get_data')}}</button>
 
   </form>
 
@@ -45,21 +46,21 @@
       <table class="table table-striped table-hover table-sm">
         <thead>
         <tr>
-          <th>Day/Month</th>
-          <th>Download</th>
-          <th>Upload</th>
-          <th>Total Traffic</th>
-          <th>Real Traffic</th>
+          <th>{{locale.get('date')}}</th>
+          <th>{{locale.get('download')}}</th>
+          <th>{{locale.get('upload')}}</th>
+          <th>{{locale.get('total_usage')}}</th>
+          <!--          <th>Real Traffic</th>-->
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let data of trafficData.tx;let i = index" >
-            <td *ngIf="trafficModel.report_type == 'daily'">{{getDate(i+1)}}</td>
-            <td *ngIf="trafficModel.report_type == 'monthly'">{{getFullYear() + '-' + (i+1)}}</td>
-            <td>{{trafficConverter.bytesToSize(trafficData.rx[i])}}</td>
-            <td>{{trafficConverter.bytesToSize(data)}}</td>
-            <td>{{trafficConverter.bytesToSize(trafficData.total[i])}}</td>
-            <td>{{trafficConverter.bytesToSize(trafficData.total_real[i])}}</td>
+        <tr *ngFor="let data of trafficData.tx;let i = index">
+          <td *ngIf="trafficModel.report_type == 'daily'">{{getDate(i + 1)}}</td>
+          <td *ngIf="trafficModel.report_type == 'monthly'">{{getFullYear() + '-' + (i + 1)}}</td>
+          <td>{{trafficConverter.bytesToSize(trafficData.rx[i])}}</td>
+          <td>{{trafficConverter.bytesToSize(data)}}</td>
+          <td>{{trafficConverter.bytesToSize(trafficData.total[i])}}</td>
+          <!--            <td>{{trafficConverter.bytesToSize(trafficData.total_real[i])}}</td>-->
         </tr>
 
         </tbody>

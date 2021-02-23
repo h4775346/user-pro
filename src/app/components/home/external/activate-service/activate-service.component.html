@@ -1,15 +1,10 @@
 
 <div class=" d-flex justify-content-center">
   <div class="mt-5 bg-white pb-5 card pt-3 px-2" style="width: 100%; max-width: 500px">
-    <h1 class="card-header">Activate Service</h1>
-    <div style="text-align: center">
-      <div class="spinner-border" role="status" *ngIf="!serviceData || !userData">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-
+    <h1 class="card-header">{{locale.get('activate_current')}}</h1>
+    <app-spinner *ngIf="!serviceData || !userData"></app-spinner>
     <div class="alert alert-warning" role="alert" *ngIf="serviceData && serviceData.subscription_status.expiration && !responseMessage">
-      <strong><i class="fa fa-exclamation-triangle"></i> Your service is already active</strong>
+      <strong><i class="fa fa-exclamation-triangle"></i> {{locale.get('sorry_you_are_still_active')}}</strong>
     </div>
 
     <div class="alert alert-warning" role="alert" *ngIf="responseMessage">
@@ -20,27 +15,27 @@
       <table class="table table-striped">
         <tbody>
         <tr>
-          <td>Service Name</td>
+          <td>{{locale.get('current_service')}}</td>
           <td>{{serviceData.profile_name}}</td>
         </tr>
         <tr>
-          <td>Service Description<br></td>
+          <td>{{locale.get('service_desc')}}<br></td>
           <td>{{serviceData.description}}<br></td>
         </tr>
         <tr>
-          <td>Subscription<br></td>
+          <td>{{locale.get('service_status')}}<br></td>
           <td>{{serviceData.subscription_status.expiration}}</td>
         </tr>
         <tr>
-          <td>Expiration<br></td>
+          <td>{{locale.get('expiration_date')}}<br></td>
           <td>{{serviceData.expiration}}</td>
         </tr>
         <tr>
-          <td>Service Price<br></td>
+          <td>{{locale.get('service_price')}}<<br></td>
           <td>{{serviceData.price}}</td>
         </tr>
         <tr>
-          <td>Balance<br></td>
+          <td>{{locale.get('account_balance')}}<br></td>
           <td>{{userData.balance}}</td>
         </tr>
         </tbody>
@@ -55,11 +50,12 @@
             <button [disabled]="loading" class="btn btn-primary" type="button" style=" width: 100%;min-width: 200px;height: 58px;"
                     (click)="activateService()">
 
-              <mat-option *ngIf="!loading" style="color: white;text-align: center;">  <i class="fa fa-bolt"></i> Activate</mat-option>
+              <mat-option *ngIf="!loading" style="color: white;text-align: center;">
+                <i class="fa fa-bolt"></i> {{locale.get('activate_now')}}</mat-option>
               <mat-option *ngIf="loading" style="text-align: center;">
             <span class="spinner-border spinner-border-sm" style="vertical-align: middle" role="status"
                   aria-hidden="true"></span>
-                Activating...
+                {{locale.get('activating')}}...
               </mat-option>
 
             </button>

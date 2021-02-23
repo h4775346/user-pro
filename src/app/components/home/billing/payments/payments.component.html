@@ -1,16 +1,16 @@
 <div class="card-body">
-  <h1 class="card-title alert alert-secondary">Payments</h1>
+  <h1 class="card-title alert alert-secondary">{{locale.get('payments')}}</h1>
 
   <app-spinner *ngIf="!responseData"></app-spinner>
   <div class="table-responsive" *ngIf="responseData">
     <table class="table table-hover">
       <thead>
       <tr>
-        <th>Receipt No</th>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Amount</th>
-        <th>Description</th>
+        <th>{{locale.get('receipt_number')}}</th>
+        <th>{{locale.get('date')}}</th>
+        <th>{{locale.get('type')}}</th>
+        <th>{{locale.get('amount')}}</th>
+        <th>{{locale.get('description')}}</th>
 
       </tr>
       </thead>

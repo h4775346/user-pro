@@ -13,21 +13,20 @@
         <a [routerLinkActive]="['active-page']" [routerLink]="['dashboard']" (click)="sideToggleForceClose()"
            style="padding-top: 10px;padding-bottom: 10px;">
           <i class="fa fa-home" style="margin-right: 10px;"></i>
-          Home
+          {{locale.get('dashboard')}}
         </a>
       </li>
       <li style="height: 60px;"><a [routerLinkActive]="['active-page']" [routerLink]="['billing']"
-                                   (click)="sideToggleForceClose()"
-                                   style="padding-top: 10px;padding-bottom: 10px;"><i class="fa fa-money"
-                                                                                      style="margin-right: 10px;"></i>Billing</a>
+                                   (click)="sideToggleForceClose()" style="padding-top: 10px;padding-bottom: 10px;">
+        <i class="fa fa-money" style="margin-right: 10px;"></i>{{locale.get('billings')}}</a>
       </li>
       <li><a [routerLinkActive]="['active-page']" [routerLink]="['data-usage']" (click)="sideToggleForceClose()"
              style="padding-top: 10px;padding-bottom: 10px;"><i class="fa fa-area-chart"
-                                                                style="margin-right: 10px;"></i>Data Usage</a>
+                                                                style="margin-right: 10px;"></i>{{locale.get('data_usage')}}</a>
       </li>
       <li><a [routerLinkActive]="['active-page']" [routerLink]="['sessions']" (click)="sideToggleForceClose()"
              style="padding-top: 10px;padding-bottom: 10px;"><i class="fa fa-th-list"
-                                                                style="margin-right: 10px;"></i>Sessions</a>
+                                                                style="margin-right: 10px;"></i>{{locale.get('sessions')}}</a>
       </li>
     </ul>
     <hr>
@@ -49,12 +48,12 @@
           <ul class="nav navbar-nav ml-auto" style="background: #222222;">
             <li class="nav-item"><a class="nav-link" style="color: #ffffff;padding-top: 11px;padding-right: 48px;"
                                     (click)="logout()">
-              <i class="fa fa-sign-out"></i>&nbsp;Sign Out</a></li>
+              <i class="fa fa-sign-out"></i>&nbsp;{{locale.get('logout')}}</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <div class="container">
+    <div class="container" [(dir)]="locale.dir" style="text-align: start">
       <div *ngFor="let warning of warnings.warningsList;">
         <app-dashboard-warning [warning]="warning"></app-dashboard-warning>
       </div>

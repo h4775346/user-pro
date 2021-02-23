@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PageModel} from '../../../../Models/page-model';
 import {UserApiService} from '../../../../services/api/user-api.service';
+import {LocalService} from '../../../../services/api/local-service';
 
 @Component({
   selector: 'app-balance-journal',
@@ -15,7 +16,7 @@ export class BalanceJournalComponent implements OnInit {
   allPages = [];
   currentPage;
 
-  constructor(private userApiService: UserApiService) {
+  constructor(private userApiService: UserApiService, public locale: LocalService) {
   }
 
   ngOnInit(): void {

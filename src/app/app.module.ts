@@ -35,6 +35,9 @@ import {BalanceJournalComponent} from './components/home/billing/balance-journal
 import {SpinnerComponent} from './components/home/external/spinner/spinner.component';
 import {MDBBootstrapModule, InputsModule} from 'angular-bootstrap-md';
 import {SelectModule} from 'ng-uikit-pro-standard';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { EndComponent } from './components/home/external/end/end.component';
 
 
 @NgModule({
@@ -60,7 +63,8 @@ import {SelectModule} from 'ng-uikit-pro-standard';
     InvoicesComponent,
     PaymentsComponent,
     BalanceJournalComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    EndComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,8 @@ import {SelectModule} from 'ng-uikit-pro-standard';
     MatOptionModule,
     MDBBootstrapModule.forRoot(),
     InputsModule,
-    SelectModule
+    SelectModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

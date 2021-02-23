@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UserApiService} from '../../../services/api/user-api.service';
+import {LocalService} from '../../../services/api/local-service';
 
 @Component({
   selector: 'app-billing',
@@ -8,7 +9,7 @@ import {UserApiService} from '../../../services/api/user-api.service';
 })
 export class BillingComponent implements OnInit, AfterViewInit {
 
-  constructor(private userApiService: UserApiService) {
+  constructor(public locale: LocalService) {
   }
 
   ngOnInit(): void {

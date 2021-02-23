@@ -4,6 +4,7 @@ import {DashboardWarningService} from '../../../services/other/dashboard-warning
 import {LocalStorageService} from '../../../services/other/local-storage.service';
 import {Router} from '@angular/router';
 import {UserApiService} from '../../../services/api/user-api.service';
+import {LocalService} from '../../../services/api/local-service';
 
 @Component({
   selector: 'app-nav',
@@ -18,7 +19,8 @@ export class NavComponent implements OnInit {
               public warnings: DashboardWarningService,
               public localStorageService: LocalStorageService,
               private router: Router,
-              public userApi: UserApiService) {
+              public userApi: UserApiService,
+              public locale: LocalService) {
   }
 
   ngOnInit(): void {

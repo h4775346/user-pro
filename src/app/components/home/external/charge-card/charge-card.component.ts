@@ -5,6 +5,8 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {WarningModel} from '../../../../Models/warning-model';
 import {DashboardWarningService} from '../../../../services/other/dashboard-warning.service';
 import {Router} from '@angular/router';
+import {LocalService} from '../../../../services/api/local-service';
+import {DialogsService} from '../../../../services/other/dialogs-service';
 
 @Component({
   selector: 'app-charge-card',
@@ -14,7 +16,9 @@ import {Router} from '@angular/router';
 export class ChargeCardComponent implements OnInit {
 
   constructor(private userApi: UserApiService, private warningService: DashboardWarningService,
-              private router: Router) {
+              private router: Router,
+              public locale: LocalService,
+              public dialogsService: DialogsService) {
   }
 
   loading = false;
@@ -45,18 +49,27 @@ export class ChargeCardComponent implements OnInit {
     switch (response) {
 
       case -2:
-        this.responseMessage = 'Wrong Card';
+        this.responseMessage = this.locale.get('wrong_card');
         break;
       case -5:
-        this.responseMessage = 'Used Card';
+        this.responseMessage = this.locale.get('used_card');
         break;
       case 200:
-        this.warningService.createWarning('Card Number ( ' + this.cardModel.pin + ' ) Charged Successfully!',
+
+
+        this.warningService.createWarning(this.locale.get('card_number') + ' ' + this.cardModel.pin + this.locale.get('card_charged'),
           WarningModel.WARNING_TYPES.success);
+
+
+        this.dialogsService.showMessage(
+          this.locale.get('successful_process'), this.locale.get('card_number') +
+          ' ' + this.cardModel.pin + this.locale.get('card_charged'));
+
+
         this.router.navigate(['user', 'home', 'dashboard']);
         break;
       case -4:
-        this.responseMessage = 'Suspended Card';
+        this.responseMessage = this.locale.get('suspended_card');
         break;
       default:
         this.responseMessage = response.message;

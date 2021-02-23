@@ -217,4 +217,17 @@ export class LocalStorageService {
       this.SET_BASE_URL(this.GET_CODE_DATA().ip_in);
     }
   }
+
+  GET_LOCALE() {
+    const locale = localStorage.getItem('locale');
+    if (locale == null || locale === '') {
+      this.SET_LOCALE('ar');
+      return 'ar';
+    }
+    return locale;
+  }
+
+  SET_LOCALE(locale) {
+    localStorage.setItem('locale', locale);
+  }
 }
