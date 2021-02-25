@@ -8,7 +8,7 @@
       <tr>
         <th>{{locale.get('invoice_num')}}</th>
         <th>{{locale.get('date')}}</th>
-        <th>{{locale.get('amount')}}</th>
+        <th>{{locale.get('amount')}} </th>
         <th>{{locale.get('description')}}</th>
         <th>{{locale.get('due_date')}}</th>
         <th>{{locale.get('paid')}}</th>
@@ -18,10 +18,11 @@
       <tr *ngFor="let invoice of invoicesData">
         <td>{{invoice.invoice_number}}</td>
         <td>{{invoice.created_at}}</td>
-        <td>{{invoice.amount}}</td>
+        <td>{{invoice.amount}} {{pound}}</td>
         <td>{{invoice.description}}</td>
         <td>{{invoice.due_date}}</td>
-        <td>{{invoice.paid}}</td>
+        <td style="color: darkgreen" *ngIf="invoice.paid === 1">{{locale.get('paid')}}</td>
+        <td style="color: darkred" *ngIf="invoice.paid !== 1">{{locale.get('unpaid')}}</td>
       </tr>
       </tbody>
     </table>

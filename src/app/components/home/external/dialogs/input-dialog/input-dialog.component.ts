@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {LocalService} from '../../../../../services/api/local-service';
 
 @Component({
   selector: 'app-input-dialog',
@@ -14,7 +15,7 @@ export class InputDialogComponent implements OnInit {
   input = '';
 
   constructor(public dialogRef: MatDialogRef<InputDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: InputDialogModel) {
+              @Inject(MAT_DIALOG_DATA) public data: InputDialogModel, public locale: LocalService) {
     this.title = data.title;
     this.placeholder = data.placeholder;
     this.inputType = data.inputType;

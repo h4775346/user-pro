@@ -1,5 +1,6 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {LocalService} from '../../../../../services/api/local-service';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -11,7 +12,7 @@ export class ConfirmDialogComponent implements OnInit {
   message: string;
 
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
+              @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel, public locale: LocalService) {
     this.title = data.title;
     this.message = data.message;
   }

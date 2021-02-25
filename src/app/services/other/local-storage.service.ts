@@ -230,4 +230,19 @@ export class LocalStorageService {
   SET_LOCALE(locale) {
     localStorage.setItem('locale', locale);
   }
+
+  GET_POUND() {
+    const codeData = this.GET_CODE_DATA();
+    if (!codeData) {
+      return '$';
+    }
+
+    if (this.GET_LOCALE() === 'en') {
+      return codeData.pound_en;
+    } else {
+      return codeData.pound_ar;
+    }
+
+  }
+
 }

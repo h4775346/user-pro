@@ -36,7 +36,6 @@ export class UserComponent implements OnInit, AfterViewInit {
     }
     this.checkCodeService.startCheckingNow();
     this.checkNavigation();
-
   }
 
   testAutoLogin() {
@@ -47,6 +46,9 @@ export class UserComponent implements OnInit, AfterViewInit {
         this.localStorageService.SAVE_JWT_KEY(response.token);
         this.checkCodeService.startCheckingNow();
         this.checkNavigation();
+      } else {
+        this.loading = false;
+        this.router.navigate(['user', 'login']);
       }
     }, error => {
       this.loading = false;

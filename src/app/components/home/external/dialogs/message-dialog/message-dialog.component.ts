@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {LocalService} from '../../../../../services/api/local-service';
 
 @Component({
   selector: 'app-message-dialog',
@@ -12,7 +13,7 @@ export class MessageDialogComponent implements OnInit {
   message: string;
 
   constructor(public dialogRef: MatDialogRef<MessageDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: MessageDialogModel) {
+              @Inject(MAT_DIALOG_DATA) public data: MessageDialogModel, public locale: LocalService) {
     this.title = data.title;
     this.message = data.message;
   }

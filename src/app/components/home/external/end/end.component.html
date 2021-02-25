@@ -1,15 +1,32 @@
-<app-spinner *ngIf="!serviceData"></app-spinner>
-<div *ngIf="serviceData" class="photo-card" [style]="{background:color}">
-  <div class="photo-background"
-       style="background: url('') center / contain no-repeat;margin: 10px;"></div>
-  <div class="photo-details">
-    <h1>{{title}}</h1>
-    <p>{{message}}</p>
-    <div class="photo-tags">
-      <ul class="justify-content-center" style="margin-top: 36px;">
-        <li><a href="#" style="font-size: 19px;">Charge Card</a></li>
-        <li></li>
-      </ul>
+<div [(dir)]="locale.dir" style="text-align: start">
+
+
+
+  <app-spinner *ngIf="!serviceData || !userData"></app-spinner>
+
+  <div *ngIf="serviceData && userData" class="photo-card" [style]="{background:color}">
+
+    <span [mat-dialog-close]="true" style="font-size: 20px; cursor: pointer"><i class="fa fa-times-circle-o p-3"></i></span>
+
+    <div class="photo-details">
+      <h1>{{locale.get('id')}} {{userData.id}}</h1>
+      <br>
+      <h1>{{title}}</h1>
+      <br>
+      <p>{{message}}</p>
+      <div class="photo-tags">
+        <ul class="justify-content-center" style="margin-top: 56px;">
+          <li><a [mat-dialog-close]="true" [routerLink]="['user','home','charge-card']" style="font-size: 19px">
+            {{locale.get('charge_card')}}</a></li>
+
+          <li><a [mat-dialog-close]="true" [routerLink]="['user','home','data-usage']" style="font-size: 19px;margin-top: 20px">
+            {{locale.get('data_usage')}}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="photo-background m-3">
+      <ngx-qrcode [width]="230" [value]="userData.id.toString()" [scale]="10"></ngx-qrcode>
     </div>
   </div>
+
 </div>

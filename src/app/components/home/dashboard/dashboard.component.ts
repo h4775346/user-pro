@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               public trafficTransfer: TrafficTransferService,
               public dialog: MatDialog,
               private warningService: DashboardWarningService,
-              private localStorageService: LocalStorageService,
+              public localStorageService: LocalStorageService,
               public locale: LocalService,
               private dialogsService: DialogsService) {
 
@@ -142,6 +142,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   private checkServiceExpiration() {
-    this.dialogsService.showEndDialog();
+    const active = this.serviceData.subscription_status.expiration;
+    const haveTraffic = this.serviceData.subscription_status.traffic;
+    if (!active || !haveTraffic) {
+      this.dialogsService.showEndDialog();
+    }
   }
+
+
 }

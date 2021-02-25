@@ -17,6 +17,7 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
   userData = null;
   serviceData = null;
   loading = false;
+  serviceStatus;
 
   responseMessage = null;
 
@@ -52,7 +53,23 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
   private getServiceData() {
     this.userApi.getService().subscribe((response: any) => {
       this.serviceData = response.data;
+      this.checkServiceExpiration();
     });
+  }
+
+  private checkServiceExpiration() {
+    const active = this.serviceData.subscription_status.expiration;
+    const haveTraffic = this.serviceData.subscription_status.traffic;
+
+    if (active && haveTraffic) {
+      this.serviceStatus = this.locale.get('active_service');
+    } else {
+      if (!active) {
+        this.serviceStatus = this.locale.get('expired_service');
+      } else {
+        this.serviceStatus = this.locale.get('depleted_service');
+      }
+    }
   }
 
   activateService() {
@@ -128,7 +145,7 @@ export class ActivateServiceComponent implements OnInit, AfterViewInit {
 
   private showDoneMessage() {
     this.warningService.createWarning(
-       this.serviceData.profile_name +  ' ' + this.locale.get('activated_successfully'),
+      this.serviceData.profile_name + ' ' + this.locale.get('activated_successfully'),
       WarningModel.WARNING_TYPES.success
     );
     this.router.navigate(['user', 'home', 'dashboard']);

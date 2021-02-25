@@ -66,7 +66,7 @@
             <h4 class="text-uppercase text-center card-title" style="color: rgb(255,255,255);margin-top: 20px;">
               {{locale.get('balance')}}</h4>
             <h4 class="text-center card-title"
-                style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.balance}}</h4>
+                style="color: rgb(255,255,255);margin-top: 12px;">{{dashboardData.balance}} {{localStorageService.GET_POUND()}}</h4>
           </div>
         </div>
       </div>
@@ -112,8 +112,9 @@
               <tbody *ngIf="serviceData">
               <tr>
                 <td>{{locale.get('current_service')}}</td>
-                <td>{{serviceData.profile_name}}<i class="fa fa-exchange"
-                                                   style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i></td>
+                <td>{{serviceData.profile_name}}</td>
+                <!--                <i class="fa fa-exchange"-->
+                <!--                   style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i>-->
               </tr>
               <tr>
                 <td>{{locale.get('service_desc')}}<br></td>
@@ -121,7 +122,14 @@
               </tr>
               <tr>
                 <td>{{locale.get('service_status')}}<br></td>
-                <td>{{serviceData.subscription_status.expiration}}<br></td>
+                <td style="color: darkgreen"
+                    *ngIf="serviceData.subscription_status.expiration && serviceData.subscription_status.traffic">{{locale.get('active')}}</td>
+                <td style="color: red"
+                    *ngIf="!serviceData.subscription_status.expiration && serviceData.subscription_status.traffic">{{locale.get('expired')}}</td>
+                <td style="color: darkorange"
+                    *ngIf="serviceData.subscription_status.expiration && !serviceData.subscription_status.traffic">{{locale.get('finished_package')}}</td>
+                <td style="color: red"
+                    *ngIf="!serviceData.subscription_status.expiration && !serviceData.subscription_status.traffic">{{locale.get('expired')}}</td>
               </tr>
               <tr>
                 <td>{{locale.get('expiration_date')}}<br></td>
@@ -129,15 +137,17 @@
               </tr>
               <tr>
                 <td>{{locale.get('connection_status')}}<br></td>
-                <td>{{serviceData.subscription_status.uptime}}<br></td>
+                <td *ngIf="serviceData.subscription_status.uptime">{{locale.get('online')}}</td>
+                <td *ngIf="!serviceData.subscription_status.uptime">{{locale.get('offline')}}</td>
               </tr>
               <tr>
                 <td>{{locale.get('service_price')}}<br></td>
-                <td>{{serviceData.price}}<br></td>
+                <td>{{serviceData.price}} {{localStorageService.GET_POUND()}}<br></td>
               </tr>
               <tr>
                 <td>{{locale.get('auto_renew')}}<br></td>
-                <td *ngIf="userData">{{userData.auto_renew}}<br></td>
+                <td *ngIf="userData && userData.auto_renew">{{locale.get('available')}}</td>
+                <td *ngIf="userData && !userData.auto_renew">{{locale.get('un_available')}}</td>
               </tr>
               </tbody>
             </table>
@@ -175,7 +185,7 @@
               </tr>
               <tr>
                 <td>{{locale.get('account_balance')}}<br></td>
-                <td>{{userData.balance}}<br></td>
+                <td>{{userData.balance}} {{localStorageService.GET_POUND()}}<br></td>
               </tr>
               <tr>
                 <td>{{locale.get('email')}}<br></td>
@@ -183,13 +193,15 @@
               </tr>
               <tr>
                 <td>{{locale.get('phone')}}<br></td>
-                <td>{{userData.phone}}<i class="fa fa-edit"
-                                         style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i><br></td>
+                <td>{{userData.phone}}<br></td>
+                <!--                <i class="fa fa-edit"-->
+                <!--                   style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i>-->
               </tr>
               <tr>
                 <td>{{locale.get('address')}}<br></td>
-                <td>{{userData.address}}<i class="fa fa-edit"
-                                           style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i><br></td>
+                <td>{{userData.address}}<br></td>
+                <!--                <i class="fa fa-edit"-->
+                <!--                   style="margin-left: 5px;margin-right: 5px;font-size: 23px;"></i>-->
               </tr>
 
               </tbody>

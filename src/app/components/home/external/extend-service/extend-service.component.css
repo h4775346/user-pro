@@ -34,3 +34,8 @@ form textarea.form-control {
   resize: vertical;
 }
 
+.list-group{
+  padding-right: 0;
+  padding-left: 0;
+}
+

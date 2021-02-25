@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {PageModel} from '../../../../Models/page-model';
 import {UserApiService} from '../../../../services/api/user-api.service';
 import {LocalService} from '../../../../services/api/local-service';
+import {LocalStorageService} from '../../../../services/other/local-storage.service';
 
 @Component({
   selector: 'app-invoices',
@@ -15,8 +16,10 @@ export class InvoicesComponent implements OnInit, AfterViewInit {
   responseData;
   allPages = [];
   currentPage;
+  pound;
 
-  constructor(private userApiService: UserApiService, public locale: LocalService) {
+  constructor(private userApiService: UserApiService, public locale: LocalService, public localStorageService: LocalStorageService) {
+  this.pound = localStorageService.GET_POUND();
   }
 
   ngOnInit(): void {

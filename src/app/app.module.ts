@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -79,7 +80,8 @@ import { EndComponent } from './components/home/external/end/end.component';
     MDBBootstrapModule.forRoot(),
     InputsModule,
     SelectModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgxQRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

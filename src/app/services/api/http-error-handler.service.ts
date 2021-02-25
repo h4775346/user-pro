@@ -25,7 +25,9 @@ export class HttpErrorHandlerService {
     } else {
       switch (error.status) {
         case 0:
+          console.log('Key Removed');
           LocalStorageService.setLastRoute(NavService.CURRENT_ROUTE);
+          LocalStorageService.REMOVE_KEY();
           HttpErrorHandlerService.router.navigate(['user']).then(() => {
             window.location.reload();
           });
